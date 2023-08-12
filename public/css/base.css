@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Register your custom font family and tell the browser where to find it. */
+@font-face {
+  font-family: "poppinsBold";
+  src: url("/public/fonts/Poppins-Bold.ttf");
+}
+@font-face {
+  font-family: "poppinsExtra";
+  src: url("/public/fonts/Poppins-ExtraBold.ttf");
+}
+@font-face {
+  font-family: "poppinsRegular";
+  src: url("/public/fonts/Poppins-Regular.ttf");
+}
+@layer components {
+  .link-nav {
+    @apply hover:underline underline-offset-8 decoration-2 hover:text-green;
+  }
+}

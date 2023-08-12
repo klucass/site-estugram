@@ -1,39 +1,57 @@
---- 
+---
 interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
+
+import "../../public/css/base.css";
 ---
 
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description">
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+<html lang="pt-br" data-theme="night">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Estugram simplifica a organização dos seus estudos. Estude com mais produtividade e eficiência controlando seu desempenho nas matérias e assuntos que estudou" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="keywords" content="organização, estudos, cronômetro, relatório, desempenho, pomodoro, produtividade, controle, eficiência, concursos, provas, OAB, Enem, vestibular" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <title>{title}</title>
+  </head>
+  <body class="font-poppins min-h-screen">
+    <nav class="lg:w-[1024px] mx-auto my-10 grid grid-cols-2">
+      <div>
+        <a href="/">
+          <img src="/img/estugram-logo.png" width="250px" alt="" />
+        </a>
+      </div>
+      <div class="flex justify-end gap-10 items-center">
+        <a class="link-nav" href="#recursos">Saiba mais</a>
+        <a class="link-nav" href="https://blog.estugram.com">Blog</a>
+        <a href="https://app.estugram.com" class="btn btn-success ring ring-success/20 hover:ring-success/80 px-8">Entrar</a>
+      </div>
+    </nav>
+    <slot />
+
+    <div class="bg-base-200 mt-20 py-10">
+      <div class="md:w-[1024px] mx-auto">
+        <div class="grid md:grid-cols-2 gap-5">
+          <div class="text-sm">
+            <img class="mb-5" src="/img/estugram-logo.png" width="250px" alt="" />
+
+            <p class="my-5">Entre em contato no email ajuda@estugram.com</p>
+          </div>
+
+          <div class="flex gap-5 justify-end">
+            <a class="link-nav" href="/privacidade">Privacidade</a>
+            <a class="link-nav" href="/termos">Termos</a>
+            <a class="link-nav" href="https://instagram.com/estugram.app">Instagram</a>
+            <a class="link-nav" href="https://twitter.com/estugramapp">Twitter</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
-<style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), rgb(var(--accent-light)) 30%, white 60%);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background: #13151A;
-		background-size: 224px;
-	}
-	code {
-		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-			Bitstream Vera Sans Mono, Courier New, monospace;
-	}
-</style>
