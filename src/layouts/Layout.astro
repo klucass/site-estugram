@@ -12,7 +12,7 @@ import "../../public/css/base.css";
 <html lang="pt-br" data-theme="night">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Estugram simplifica a organização dos seus estudos. Estude com mais produtividade e eficiência controlando seu desempenho nas matérias e assuntos que estudou" />
+    <meta name="description" content="Domine seu tempo de estudo com o Estugram, a aplicação web definitiva para controle de estudo eficiente. Aproveite o Modo Pomodoro, rastreie seu desempenho em questões e alcance a produtividade máxima." />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
@@ -34,7 +34,9 @@ import "../../public/css/base.css";
         <a href="https://app.estugram.com" class="btn btn-success ring ring-success/20 hover:ring-success/80 px-8">Entrar</a>
       </div>
     </nav>
-    <slot />
+    <div class="md:w-[1024px] mx-auto min-h-screen">
+      <slot />
+    </div>
 
     <div class="px-5 md:px-0 bg-base-200 mt-20 py-10">
       <div class="md:w-[1024px] mx-auto">
@@ -42,7 +44,7 @@ import "../../public/css/base.css";
           <div class="text-sm">
             <img class="mb-5" src="/img/estugram-logo.png" width="250px" alt="" />
 
-            <p class="my-5">Entre em contato no email ajuda@estugram.com</p>
+            <p class="my-5">Precisando de ajuda? Envie email para ajuda@estugram.com</p>
           </div>
 
           <div class="flex gap-5 justify-end">
