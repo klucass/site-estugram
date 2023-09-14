@@ -6,14 +6,17 @@
 @font-face {
   font-family: "poppinsBold";
   src: url("/fonts/Poppins-Bold.ttf");
+  font-display: swap;
 }
 @font-face {
   font-family: "poppinsExtra";
   src: url("/fonts/Poppins-ExtraBold.ttf");
+  font-display: swap;
 }
 @font-face {
   font-family: "poppinsRegular";
   src: url("/fonts/Poppins-Regular.ttf");
+  font-display: swap;
 }
 @layer components {
   .link-nav {
