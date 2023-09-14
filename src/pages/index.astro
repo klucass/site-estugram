@@ -1,5 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+import { Image } from 'astro:assets';
+import  screenshot from '../img/screenshot.png';
+import screenshot2 from '../img/screenshot2.png';
+import screenshot3 from '../img/screenshot3.png';
 ---
 
 <Layout title="Estugram">
@@ -54,14 +59,14 @@ import Layout from "../layouts/Layout.astro";
           <span class="text-center bg-green text-base-200 py-1 px-5 rounded-full text-sm font-poppinsBold"> Pomodoro ou Cronômetro</span>
           <h2 class="font-poppinsBold text-2xl text-center mb-10 mt-5 text-white">O timer que te ajuda a focar no que importa</h2>
         </div>
-        <div class="col-span-3"><img src="/img/screenshot.png" alt="" /></div>
+        <div class="col-span-3"><Image src={screenshot} alt="Tela do timer pomodoro" /></div>
       </div>
       <div class="my-20 py-10 md:grid grid-cols-5 gap-5">
         <div class="md:hidden self-center col-span-2 text-center">
           <span class="text-center bg-green text-base-200 py-1 px-5 rounded-full text-sm font-poppinsBold"> Acompanhe sua evolução</span>
           <h2 class="font-poppinsBold text-2xl text-center mb-10 mt-5 text-white">Obtenha insights valiosos sobre seus hábitos de estudo</h2>
         </div>
-        <div class="col-span-3"><img src="/img/screenshot2.png" alt="" /></div>
+        <div class="col-span-3"><Image src={screenshot2} alt="Tela de estatísticas de estudo" /></div>
         <div class="hidden md:block self-center col-span-2 text-center">
           <span class="text-center bg-green text-base-200 py-1 px-5 rounded-full text-sm font-poppinsBold"> Acompanhe sua evolução</span>
           <h2 class="font-poppinsBold text-2xl text-center mb-10 mt-5 text-white">Obtenha insights valiosos sobre seus hábitos de estudo</h2>
@@ -72,7 +77,7 @@ import Layout from "../layouts/Layout.astro";
           <span class="text-center bg-green text-base-200 py-1 px-5 rounded-full text-sm font-poppinsBold">Modo escuro por padrão</span>
           <h2 class="font-poppinsBold text-2xl text-center mb-10 mt-5 text-white">Modo claro opcional</h2>
         </div>
-        <div class="col-span-3"><img src="/img/screenshot3.png" alt="" /></div>
+        <div class="col-span-3"><Image src={screenshot3} alt="Tela do estugram com tema claro" /></div>
       </div>
       <div class="text-center my-10">
         <a class="cta-button" href="https://app.estugram.com">Experimente agora</a>
