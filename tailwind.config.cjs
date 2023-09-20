@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const defaultTheme = require("tailwindcss/defaultTheme");
 module.exports = {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
@@ -10,9 +11,8 @@ module.exports = {
         green: "#01d1d1",
       },
       fontFamily: {
-        poppins: ["poppinsRegular"],
-        poppinsBold: ["poppinsBold"],
-        poppinsExtra: ["poppinsExtra"],
+        poppins: ["Poppins", ...defaultTheme.fontFamily.sans],
+        poppinsBold: ["poppinsBold", ...defaultTheme.fontFamily.sans],
       },
     },
   },
