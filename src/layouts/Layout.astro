@@ -2,15 +2,15 @@
 interface Props {
   title: string;
 }
-import { Image } from 'astro:assets';
-import logo from '../img/estugram_logo.png';
+import { Image } from "astro:assets";
+import logo from "../img/estugram_logo.png";
 
 const { title } = Astro.props;
 
 import "../css/base.css";
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br" data-theme="night">
   <head>
     <meta charset="UTF-8" />
@@ -58,4 +58,16 @@ import "../css/base.css";
       </div>
     </div>
   </body>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y9MDN3B9TP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-Y9MDN3B9TP");
+  </script>
 </html>
