@@ -13,6 +13,20 @@ import "../css/base.css";
 <!doctype html>
 <html lang="pt-br" data-theme="night">
   <head>
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-MW5NXNR7");
+    </script>
+    <!-- End Google Tag Manager -->
     <meta charset="UTF-8" />
     <meta name="description" content="Domine seu tempo de estudo com o Estugram, a aplicação web definitiva para controle de estudo eficiente. Aproveite o Modo Pomodoro, rastreie seu desempenho em questões e alcance a produtividade máxima." />
     <meta name="viewport" content="width=device-width" />
@@ -23,6 +37,9 @@ import "../css/base.css";
     <title>{title}</title>
   </head>
   <body class="font-poppins min-h-screen">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MW5NXNR7" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <nav class="mx-auto my-10 grid px-5 md:grid-cols-2 md:px-0 lg:w-[1024px]">
       <div>
         <a href="/" title="Página inicial">
@@ -58,16 +75,4 @@ import "../css/base.css";
       </div>
     </div>
   </body>
-
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y9MDN3B9TP"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag("js", new Date());
-
-    gtag("config", "G-Y9MDN3B9TP");
-  </script>
 </html>
