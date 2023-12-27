@@ -35,11 +35,11 @@ import "../css/base.css";
     <meta name="keywords" content="site pomodoro, timer pomodoro, site para organizar os estudos, pomodoro online, temporizador de estudos, timer para estudos, cronômetro para estudar" />
     <title>{title}</title>
   </head>
-  <body class="font-poppins min-h-screen">
+  <body class="font-sans min-h-screen">
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MW5NXNR7" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    <nav class="mx-auto my-10 grid px-5 md:grid-cols-2 md:px-0 lg:w-[1024px]">
+    <nav class="mx-auto my-10 grid px-5 md:grid-cols-2 lg:w-[1024px]">
       <div>
         <a href="/" title="Página inicial">
           <Image src={logo} class="w-full md:w-[250px]" alt="Estugram" />
@@ -51,26 +51,27 @@ import "../css/base.css";
         <a href="https://app.estugram.com" class="cta-button">Entrar</a>
       </div>
     </nav>
-    <div class="md:w-[1024px] mx-auto min-h-screen">
+    <div class="lg:w-[1024px] mx-auto min-h-screen">
       <slot />
     </div>
 
-    <div class="px-5 md:px-0 bg-base-200 mt-20 py-10">
-      <div class="md:w-[1024px] mx-auto">
-        <div class="grid md:grid-cols-2 gap-5">
-          <div class="text-sm">
-            <Image class="mb-5" src={logo} class="w-[250px]" alt="Estugram - Domine seu tempo de estudo" />
-
-            <p class="my-5">Precisando de ajuda? Envie email para ajuda@estugram.com</p>
-          </div>
-
-          <div class="flex gap-5 justify-end">
-            <a class="link-nav" href="/privacidade">Privacidade</a>
-            <a class="link-nav" href="/termos">Termos</a>
+    <div class="bg-base-200 py-5">
+      <footer class="lg:w-[1024px] mx-auto footer px-10 py-5 text-base-content">
+        <aside class="items-center grid-flow-col">
+          <Image class="mb-5" src={logo} class="w-[250px]" alt="Estugram - Domine seu tempo de estudo" />
+        </aside>
+        <nav class="md:place-self-center md:justify-self-end">
+          <div class="grid grid-flow-col gap-4">
+            <a class="link-nav text-green font-bold" href="https://blog.estugram.com">Blog</a>
             <a class="link-nav" href="https://instagram.com/estugram.app">Instagram</a>
             <a class="link-nav" href="https://twitter.com/estugramapp">Twitter</a>
+            <a class="link-nav" href="https://twitter.com/estugramapp">Termos</a>
+            <a class="link-nav" href="https://twitter.com/estugramapp">Privacidade</a>
           </div>
-        </div>
+        </nav>
+      </footer>
+      <div class="lg:w-[1024px] mx-auto text-center py-5 text-sm">
+        <p>Precisando de ajuda? Envie email para ajuda@estugram.com</p>
       </div>
     </div>
   </body>
