@@ -23,13 +23,10 @@ import "../css/base.css";
     <title>{title}</title>
   </head>
   <body class="font-sans min-h-screen">
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MW5NXNR7" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
     <nav class="mx-auto my-10 grid px-5 md:grid-cols-2 lg:w-[1024px]">
       <div>
         <a href="/" title="Página inicial">
-          <Image src={logo} class="w-full md:w-[250px]" alt="Estugram" />
+          <Image src={logo} class="w-full md:w-[250px]" alt="Estugram" loading="eager"/>
         </a>
       </div>
       <div class="mt-20 flex justify-center items-center md:justify-end gap-10 md:mt-0">
