@@ -1,0 +1,215 @@
+---
+// Páginas de texto corrido (termos, privacidade): título, índice fixo ao lado
+// no computador e o texto numa coluna de leitura confortável.
+import Base from './Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  titulo: string;
+  /** Linha abaixo do título, como a data de vigência. */
+  nota?: string;
+  indice: { id: string; titulo: string }[];
+}
+
+const { title, description, titulo, nota, indice } = Astro.props;
+---
+
+<Base title={title} description={description}>
+  <Header />
+
+  <main id="conteudo" class="doc">
+    <div class="brilho" aria-hidden="true"></div>
+    <div class="wrap">
+      <header class="doc-head" data-reveal>
+        <a class="voltar" href="/"><span aria-hidden="true">←</span> Início</a>
+        <h1>{titulo}</h1>
+        {nota && <p class="nota">{nota}</p>}
+      </header>
+
+      <div class="doc-grid">
+        <nav class="indice" aria-label="Nesta página" data-reveal style="--d:1">
+          <span>Nesta página</span>
+          <ol>
+            {
+              indice.map((s) => (
+                <li>
+                  <a href={`#${s.id}`}>{s.titulo}</a>
+                </li>
+              ))
+            }
+          </ol>
+        </nav>
+
+        <article class="texto" data-reveal style="--d:2">
+          <slot />
+        </article>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Base>
+
+<script>
+  // Destaca no índice a seção que está sendo lida
+  const links = new Map(
+    [...document.querySelectorAll<HTMLAnchorElement>('.indice a')].map((a) => [a.hash.slice(1), a]),
+  );
+  const observador = new IntersectionObserver(
+    (entradas) => {
+      for (const e of entradas) {
+        if (!e.isIntersecting) continue;
+        links.forEach((a, id) => a.classList.toggle('atual', id === e.target.id));
+      }
+    },
+    { rootMargin: '-20% 0px -70% 0px' },
+  );
+  links.forEach((_, id) => {
+    const alvo = document.getElementById(id);
+    if (alvo) observador.observe(alvo);
+  });
+</script>
+
+<style>
+  .doc {
+    position: relative;
+    isolation: isolate;
+    overflow-x: clip;
+    padding: clamp(40px, 6vw, 80px) 0 clamp(72px, 10vw, 128px);
+  }
+  .brilho {
+    position: absolute;
+    z-index: -1;
+    left: 50%;
+    top: -260px;
+    width: min(1100px, 150vw);
+    height: 600px;
+    translate: -50% 0;
+    background: radial-gradient(closest-side, rgb(91 140 255 / 0.16), transparent);
+    pointer-events: none;
+  }
+  .doc-head {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: clamp(40px, 6vw, 72px);
+  }
+  .voltar {
+    align-self: flex-start;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+  .voltar span {
+    display: inline-block;
+    transition: translate 0.4s var(--ease-out);
+  }
+  .voltar:hover {
+    color: var(--text);
+  }
+  .voltar:hover span {
+    translate: -3px 0;
+  }
+  h1 {
+    font-size: clamp(38px, 6vw, 72px);
+    letter-spacing: -0.03em;
+  }
+  .nota {
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  .doc-grid {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 720px);
+    gap: clamp(32px, 6vw, 96px);
+    align-items: start;
+  }
+  .indice {
+    position: sticky;
+    top: 104px;
+    font-size: 14px;
+  }
+  .indice > span {
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .indice ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-left: 1px solid var(--line-2);
+  }
+  .indice a {
+    display: block;
+    margin-left: -1px;
+    padding: 7px 0 7px 16px;
+    border-left: 2px solid transparent;
+    color: var(--muted);
+    text-decoration: none;
+    line-height: 1.35;
+    transition:
+      color 0.3s ease,
+      border-color 0.3s ease;
+  }
+  .indice a:hover {
+    color: var(--text);
+  }
+  .indice a.atual {
+    color: var(--text);
+    border-left-color: var(--blue);
+  }
+
+  .texto {
+    color: var(--muted-2);
+    font-size: 17px;
+    line-height: 1.75;
+  }
+  .texto :global(section) {
+    scroll-margin-top: 100px;
+    padding-bottom: 40px;
+  }
+  .texto :global(section + section) {
+    padding-top: 40px;
+    border-top: 1px solid var(--line);
+  }
+  .texto :global(h2) {
+    color: var(--text);
+    font-size: clamp(22px, 2.4vw, 28px);
+    font-stretch: 115%;
+    margin-bottom: 18px;
+  }
+  .texto :global(p + p) {
+    margin-top: 16px;
+  }
+  .texto :global(ol) {
+    margin: 16px 0 0;
+    padding-left: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .texto :global(li::marker) {
+    color: var(--blue);
+    font-weight: 800;
+  }
+
+  @media (max-width: 900px) {
+    .doc-grid {
+      grid-template-columns: 1fr;
+    }
+    .indice {
+      position: static;
+    }
+  }
+</style>

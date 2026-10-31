@@ -1,0 +1,129 @@
+---
+// Lista do blog: /blog é a primeira página, /blog/2 a segunda e assim por diante.
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PostCard from '../../components/PostCard.astro';
+import Paginacao from '../../components/Paginacao.astro';
+import { getPosts, type Post } from '../../lib/blog';
+import { postsPorPagina } from '../../config';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  return paginate(await getPosts(), { pageSize: postsPorPagina });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+const posts = page.data as Post[];
+const primeira = page.currentPage === 1;
+const sufixo = primeira ? '' : ` · Página ${page.currentPage}`;
+---
+
+<Base
+  title={`Blog do Estugram${sufixo}`}
+  description="Dicas de estudo para concursos, técnicas de produtividade e novidades do Estugram."
+>
+  <Header />
+
+  <main id="conteudo" class="blog">
+    <div class="brilho" aria-hidden="true"></div>
+    <div class="wrap">
+      <header class="blog-head" data-reveal>
+        <span class="eyebrow">Blog</span>
+        <h1>Dicas de estudo e novidades do Estugram</h1>
+        {
+          primeira ? (
+            <p>Técnicas para organizar a rotina, revisar melhor e manter o foco, e o que há de novo no app.</p>
+          ) : (
+            <p>
+              Página {page.currentPage} de {page.lastPage}
+            </p>
+          )
+        }
+      </header>
+
+      {
+        posts.length === 0 ? (
+          <p class="vazio">Ainda não há artigos publicados.</p>
+        ) : (
+          <ul class="grade">
+            {posts.map((post, i) => (
+              <li class:list={{ largo: primeira && i === 0 }} data-reveal style={`--d:${Math.min(i, 5)}`}>
+                <PostCard post={post} destaque={primeira && i === 0} prioridade={i === 0} />
+              </li>
+            ))}
+          </ul>
+        )
+      }
+
+      <Paginacao page={page} />
+    </div>
+  </main>
+
+  <Footer />
+</Base>
+
+<style>
+  .blog {
+    position: relative;
+    isolation: isolate;
+    overflow-x: clip;
+    padding: clamp(40px, 6vw, 80px) 0 clamp(72px, 10vw, 128px);
+  }
+  .brilho {
+    position: absolute;
+    z-index: -1;
+    left: 50%;
+    top: -260px;
+    width: min(1100px, 150vw);
+    height: 600px;
+    translate: -50% 0;
+    background: radial-gradient(closest-side, rgb(91 140 255 / 0.16), transparent);
+    pointer-events: none;
+  }
+  .blog-head {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 760px;
+    margin-bottom: clamp(40px, 6vw, 64px);
+  }
+  h1 {
+    font-size: clamp(38px, 6vw, 72px);
+    letter-spacing: -0.03em;
+  }
+  .blog-head p {
+    color: var(--muted-2);
+    font-size: clamp(17px, 1.6vw, 19px);
+  }
+  .grade {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(16px, 2.4vw, 28px);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .grade > li {
+    display: flex;
+  }
+  .grade > li > :global(*) {
+    flex: 1;
+  }
+  .largo {
+    grid-column: 1 / -1;
+  }
+  .vazio {
+    color: var(--muted);
+  }
+  @media (max-width: 1000px) {
+    .grade {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 640px) {
+    .grade {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

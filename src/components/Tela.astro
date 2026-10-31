@@ -1,0 +1,157 @@
+---
+// Print de uma tela do app (public/telas) numa moldura de navegador ou de celular.
+// tipo "auto" usa a moldura de navegador e troca para o print de celular em telas estreitas.
+interface Props {
+  nome: string;
+  alt: string;
+  tipo?: 'web' | 'celular' | 'auto';
+  /** Largura em que a imagem aparece, para o navegador escolher entre 1x e 2x. */
+  sizes?: string;
+  eager?: boolean;
+  class?: string;
+  style?: string;
+}
+
+const { nome, alt, tipo = 'auto', sizes = '(min-width: 1200px) 760px, 92vw', eager = false, class: className, style } = Astro.props;
+const web = `/telas/${nome}.webp 1920w, /telas/${nome}@2x.webp 2880w`;
+const celular = `/telas/${nome}-movel.webp`;
+const loading = eager ? 'eager' : 'lazy';
+---
+
+<figure class:list={['tela', `tela-${tipo}`, className]} style={style}>
+  {
+    tipo !== 'celular' && (
+      <div class="barra" aria-hidden="true">
+        <span class="pontos">
+          <i />
+          <i />
+          <i />
+        </span>
+        <span class="url">app.estugram.com</span>
+      </div>
+    )
+  }
+  <div class="vista">
+    {
+      tipo === 'celular' ? (
+        <img src={celular} width="780" height="1688" alt={alt} loading={loading} decoding="async" />
+      ) : (
+        <picture>
+          {tipo === 'auto' && <source media="(max-width: 719px)" srcset={celular} width="780" height="1688" />}
+          <img
+            src={`/telas/${nome}.webp`}
+            srcset={web}
+            sizes={sizes}
+            width="1920"
+            height="1200"
+            alt={alt}
+            loading={loading}
+            decoding="async"
+            fetchpriority={eager ? 'high' : undefined}
+          />
+        </picture>
+      )
+    }
+  </div>
+</figure>
+
+<style>
+  .tela {
+    margin: 0;
+    position: relative;
+    background: #0a0d12;
+    border: 1px solid rgb(255 255 255 / 0.09);
+    box-shadow:
+      0 0 0 1px rgb(0 0 0 / 0.6),
+      0 40px 80px -24px rgb(0 0 0 / 0.75),
+      0 0 120px -40px rgb(91 140 255 / 0.25);
+    overflow: hidden;
+  }
+  .tela::after {
+    /* Brilho fino na borda de cima, como vidro */
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgb(255 255 255 / 0.07), transparent 22%);
+  }
+  .vista {
+    position: relative;
+    overflow: hidden;
+  }
+  .vista img {
+    width: 100%;
+    height: auto;
+    transform: scale(var(--z, 1));
+    transform-origin: var(--o, 50% 50%);
+    transition: transform 1.2s var(--ease-out);
+  }
+
+  /* Navegador */
+  .tela-web,
+  .tela-auto {
+    border-radius: 14px;
+  }
+  .barra {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 34px;
+    padding: 0 14px;
+    background: #12161e;
+    border-bottom: 1px solid rgb(255 255 255 / 0.05);
+  }
+  .pontos {
+    display: flex;
+    gap: 6px;
+  }
+  .pontos i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #2a303d;
+  }
+  .url {
+    margin: 0 auto;
+    translate: -24px 0;
+    font-size: 11px;
+    color: var(--muted);
+    background: #0c0f15;
+    border-radius: 7px;
+    padding: 3px 22px;
+    letter-spacing: 0.01em;
+  }
+
+  /* Celular: borda e cantos proporcionais à largura, para não engrossar quando o celular fica pequeno.
+     Os raios em % usam largura / altura do próprio elemento (proporção fixa do print, ~1:2,16). */
+  .tela-celular {
+    container-type: inline-size;
+    border-radius: 14.7% / 6.9%;
+    background: linear-gradient(160deg, #2a2f3a, #0c0e13 40%, #1a1e27);
+  }
+  .tela-celular .vista {
+    margin: 2.3cqw;
+    border-radius: 12.9% / 6%;
+  }
+
+  @media (max-width: 719px) {
+    .tela-auto {
+      container-type: inline-size;
+      border-radius: 14.7% / 6.9%;
+      background: linear-gradient(160deg, #2a2f3a, #0c0e13 40%, #1a1e27);
+      width: min(100%, 300px);
+      margin-inline: auto;
+    }
+    .tela-auto .barra {
+      display: none;
+    }
+    .tela-auto .vista {
+      margin: 2.3cqw;
+      border-radius: 12.9% / 6%;
+    }
+    .tela-auto .vista img {
+      transform: none;
+    }
+  }
+</style>

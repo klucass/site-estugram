@@ -1,54 +1,73 @@
-# Astro Starter Kit: Basics
+# Estugram · landing page
 
-```
-npm create astro@latest -- --template basics
-```
+Site estático em Astro para o novo posicionamento do Estugram. A marca no cabeçalho e no rodapé é `public/estugram-logo-branca.png`, a mesma imagem que o app usa (`appestugram/public/img/estugram-logo-branca.png`); o símbolo sozinho fica em `public/favicon.svg`. O site apresenta os desafios de estudo em grupo, com check-in com foto, feed e ranking.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+O visual da página segue o protótipo de alta fidelidade de desafios (https://claude.ai/artifact/GD9yD5myMZQHPjHw7Cc6HL): tema escuro `#0E1117`, fonte Archivo larga, azul `#5B8CFF` com texto escuro por cima e rosa `#FF4D8A` para sequência e para o "cafezinho". O protótipo usava uma chama ("fogo"), trocada por uma xícara de café para não lembrar a marca do Tinder. Posicionamento e planos vêm de `appestugram/docs/estugram-desafios.md`.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Tom dos textos
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+A página foi escrita para o lançamento dos desafios. O público principal é quem estuda para concurso e quer manter uma rotina com amigos. A mensagem parte de acompanhar os estudos e encontrar motivação na companhia do grupo.
 
-## 🚀 Project Structure
+O tom é próximo e acolhedor, com competição leve. Evite cobranças por dias sem estudar, promessas de aprovação, superlativos sem comprovação e gírias forçadas. Explique os benefícios com situações concretas e apresente o app também a quem nunca usou o Estugram. O plano Turma continua sendo apresentado como piloto.
 
-Inside of your Astro project, you'll see the following folders and files:
+Toda pontuação é individual. A trilha de interação tem um ranking separado do ranking de estudos. Comentar e mandar cafezinho para participantes diferentes do desafio rende pontos: quanto mais pessoas diferentes receberem essas interações, maior a pontuação. Esses pontos não se somam aos de estudo. Valores, limites e períodos de contagem não foram definidos para os textos do site.
 
-```
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+## Rodar
+
+```sh
+npm install
+npm run dev      # http://localhost:4321
+npm run check    # tipos
+npm run build    # gera dist/
+npm run preview
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Arquivos
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+- `src/pages/index.astro`: todas as seções e o texto da página.
+- `src/pages/termos.astro` e `src/pages/privacidade.astro`: texto trazido de `site-estugram` (estugram.com), com o layout `src/layouts/Documento.astro`.
+- `src/components/Header.astro` e `src/components/Footer.astro`: cabeçalho e rodapé de todas as páginas.
+- `src/config.ts`: links do app com UTM, e-mail do piloto e números dos planos.
+- `public/telas/`: prints do app. Cada tela tem `nome.webp` (1920px), `nome@2x.webp` e `nome-movel.webp` (celular). Os prints da sala de estudo (`sala`) e os de `inicio` e `ranking` foram refeitos em 28/10/2026 com o seed de demonstração (`DEMO_NOW="2026-10-15 15:30:00"`), avatares e presenças na sala da Maratona e o navegador com o relógio na mesma hora.
+- `src/components/Tela.astro`: mostra um print numa moldura de navegador ou de celular. Com `tipo="auto"`, troca para o print de celular em telas estreitas.
+- `src/scripts/movimento.ts`: entrada dos blocos ao rolar, números que contam, borda que acende sob o mouse e cabeçalho com fundo de vidro. Sem JavaScript ou com movimento reduzido, a página aparece parada e completa.
+- `public/og.jpg`: imagem de prévia do link (WhatsApp, redes), recortada de `inicio@2x.webp`.
+- `src/components/CheckinCard.astro`: post do feed, com o botão de cafezinho funcionando.
+- `src/components/RankingDemo.astro`: exemplo de ranking individual, com pódio e lista de participantes.
+- `src/components/Cafe.astro`: ícone da xícara, usado na reação e na sequência de dias.
+- `src/styles/global.css`: tokens de cor, tipografia e botões.
+- `src/content/blog/`: artigos do blog, um `.md` por artigo, com as capas em `capas/`. Veja "Blog" abaixo.
+- `src/pages/blog/[...page].astro`: lista paginada (`/blog`, `/blog/2`...). `src/pages/blog/[slug].astro`: página do artigo.
+- `src/lib/blog.ts`: ordem dos artigos, data em português e tempo de leitura.
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Blog
 
-## 🧞 Commands
+O blog que ficava em `blog.estugram.com` (projeto `estugram-blog`, em Nuxt) agora está em `/blog`. Os 12 artigos vieram de lá com o mesmo slug: `blog.estugram.com/posts/pomodoro` virou `/blog/pomodoro`.
 
-All commands are run from the root of the project, from a terminal:
+Para publicar um artigo, crie `src/content/blog/nome-do-artigo.md`. O nome do arquivo vira o endereço.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:3000`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+```md
+---
+titulo: "Como montar um ciclo de estudos"
+descricao: "Resumo de uma ou duas frases. Aparece na lista e na prévia do link."
+capa: ./capas/ciclo.webp
+capaAlt: "" # descreva a foto se ela mostrar algo importante
+data: 2026-10-22
+rascunho: true # some do site publicado, mas aparece no npm run dev
+---
 
-## 👀 Want to learn more?
+Texto em Markdown. Use ### para os intertítulos.
+```
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+A capa é otimizada no build (vários tamanhos em WebP), e a prévia de 1200×630 é gerada a partir dela. A lista mostra os mais novos primeiro. Artigos sem `data` vão para o fim, em ordem alfabética. O número de artigos por página fica em `postsPorPagina`, em `config.ts`.
+
+## Antes de publicar
+
+- **Os desafios ainda não existem no app.** Os botões levam para `app.estugram.com`. Se o lançamento demorar, troque os CTAs por uma lista de espera.
+- **Limite de 10 pessoas no plano Grátis** é hipótese do modelo de negócio (`planos.gratis` em `config.ts`).
+- **Plano Turma** aparece como "Piloto" e abre um e-mail, porque ainda não tem preço.
+- Pro a R$ 37/ano com 7 dias grátis vem do app atual.
+- Painel da turma, nomes e números são exemplos, marcados como ilustrativos.
+- **Datas dos artigos antigos.** O blog antigo não guardava data de publicação, então os 12 artigos aparecem sem data. O histórico do `estugram-blog` também não ajuda: todos entraram juntos no commit que criou o blog em Nuxt (02/11/2024). Preencha `data` neles se souber quando saíram.
+- **Redirecionar o blog antigo.** No servidor de `blog.estugram.com`, crie um 301 de `/posts/:slug` para `https://estugram.com/blog/:slug` e de `/` para `https://estugram.com/blog`.
+- Termos e privacidade repetem o texto de estugram.com, que é genérico e de maio de 2022. Ele não fala de fotos de check-in, feed, ranking nem do que os outros participantes do desafio veem. Vale uma revisão jurídica antes do lançamento.

@@ -1,0 +1,692 @@
+---
+// Versão web do app (tela "Desafios" do protótipo) dentro de um notebook.
+// A tela é desenhada numa base de 1000px de largura; --u vale 1px dessa base
+// e escala com a largura do notebook, então tudo diminui junto no celular.
+import Cafe from './Cafe.astro';
+
+const semana = ['feito', 'feito', 'feito', 'hoje', '', '', ''];
+const dias = ['S', 'T', 'Q', 'Q', 'S', 'S', 'D'];
+
+const checkins = [
+  { ini: 'AS', bg: '#6A4C93', nome: 'Ana Souza', quando: 'há 12 min', txt: '3h 20m de Português · 60 questões · 88%', pts: '+3,3 h', foto: '#4A5568' },
+  { ini: 'RL', bg: '#3F6E5A', nome: 'Rafael Lima', quando: 'há 1 h', txt: '2h 05m de Dir. Constitucional · 50 questões · 90%', pts: '+2,1 h', foto: '#3B4A3F' },
+  { ini: 'JP', bg: '#8A5A44', nome: 'Juliana Prado', quando: 'há 2 h', txt: '4h 10m de Dir. Administrativo · 80 questões · 84%', pts: '+4,2 h', foto: '#5A4A3B' },
+];
+---
+
+<div
+  class="laptop"
+  role="img"
+  aria-label="O Estugram no navegador: desafio Maratona TRF Outubro em destaque, 6º lugar de 18, check-ins de hoje da turma e 11 dias seguidos"
+>
+  <div class="lid">
+    <div class="screen" aria-hidden="true">
+      <div class="ui">
+        <div class="browser">
+          <span class="dots"><i></i><i></i><i></i></span>
+          <span class="url">app.estugram.com</span>
+        </div>
+
+        <div class="app">
+          <aside class="side">
+            <span class="logo"><img src="/marca.svg" alt="" /><span class="marca-nome">estugram</span></span>
+            <span class="new">+ Novo check-in</span>
+            <nav>
+              <span class="on">
+                <svg viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0zM8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7"></path></svg>
+                Desafios
+              </span>
+              <span>
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"></circle><path d="M12 9v4l2.5 2.5M9 2.5h6"></path></svg>
+                Timer<em class="tnum">1:24:10</em>
+              </span>
+              <span>
+                <svg viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 20.5a2 2 0 0 0 4 0"></path></svg>
+                Atividade
+              </span>
+              <span>
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg>
+                Perfil
+              </span>
+            </nav>
+            <small class="lbl">Seus desafios</small>
+            <div class="mine">
+              <span><i style="background:#5B8CFF"></i>Maratona TRF Outubro</span>
+              <span><i style="background:#FF4D8A"></i>Cursinho Turma B</span>
+              <span><i style="background:#F5C451"></i>Pomodoros da firma</span>
+            </div>
+            <div class="user">
+              <span class="av me">LA</span>
+              <span><b>Lucas Andrade</b><small>@lucas</small></span>
+            </div>
+          </aside>
+
+          <div class="main">
+            <div class="top">
+              <div>
+                <small>Quinta, 15 de outubro</small>
+                <b class="h1">Desafios</b>
+              </div>
+              <div class="acts">
+                <span class="ghost">Entrar com código</span>
+                <span class="white">+ Criar desafio</span>
+              </div>
+            </div>
+
+            <div class="cols">
+              <div class="left">
+                <div class="feat">
+                  <div class="feat-top">
+                    <div>
+                      <small>Pontua por horas estudadas · 18 participantes</small>
+                      <b>Maratona TRF Outubro</b>
+                    </div>
+                    <span class="pos"><b>6º</b><small>de 18</small></span>
+                  </div>
+                  <div class="stats">
+                    <span><b class="tnum">41h 25m</b><small>suas horas</small></span>
+                    <span><b class="tnum">9h 15m</b><small>para o 5º lugar</small></span>
+                    <span><b class="tnum">11 de 18</b><small>já fizeram check-in hoje</small></span>
+                  </div>
+                  <div class="prog">
+                    <div class="prog-lbl"><span>Dia 15 de 31</span><span>faltam 16 dias</span></div>
+                    <div class="bar"><span></span></div>
+                  </div>
+                  <div class="btns">
+                    <span class="dark">+ Fazer check-in</span>
+                    <span>Abrir feed</span>
+                    <span>Ver ranking</span>
+                  </div>
+                </div>
+
+                <div class="card today">
+                  <div class="card-h"><b>Hoje na Maratona</b><span class="link">Ver feed completo</span></div>
+                  {
+                    checkins.map((c) => (
+                      <div class="ci">
+                        <span class="av" style={`background:${c.bg}`}>{c.ini}</span>
+                        <span class="ci-t">
+                          <span><b>{c.nome}</b> <em>· {c.quando}</em></span>
+                          <small>{c.txt}</small>
+                        </span>
+                        <span class="pts">{c.pts}</span>
+                        <span class="thumb" style={`background:${c.foto}`}><i></i></span>
+                      </div>
+                    ))
+                  }
+                </div>
+              </div>
+
+              <div class="right">
+                <div class="card streak">
+                  <div class="st-top">
+                    <Cafe filled class="cafe-ic" />
+                    <span><b>11 dias seguidos</b><small>Veja os estudos que você já registrou</small></span>
+                  </div>
+                  <div class="days">
+                    {
+                      semana.map((s, i) => (
+                        <span class="day">
+                          <i class={s}>
+                            {s === 'feito' && (
+                              <svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
+                            )}
+                          </i>
+                          {dias[i]}
+                        </span>
+                      ))
+                    }
+                  </div>
+                </div>
+
+                <div class="card hoje">
+                  <div class="card-h"><b>Estudo de hoje</b><b class="big tnum">3h 12m</b></div>
+                  <div class="mat"><i style="background:#14B8B8"></i><span>Português</span><b class="tnum">1h 48m</b></div>
+                  <div class="mat"><i style="background:#5B8CFF"></i><span>Dir. Constitucional</span><b class="tnum">1h 24m</b></div>
+                  <small class="run">Timer em andamento</small>
+                </div>
+
+                <div class="card rank">
+                  <div class="card-h"><b>Ranking de estudos</b><span class="link">Ver tudo</span></div>
+                  <div class="rk"><span class="n">5</span><span class="av" style="background:#7A5C2E">CD</span><span class="nm">Carla Dias</span><b class="tnum">50h 40m</b></div>
+                  <div class="rk me"><span class="n">6</span><span class="av" style="background:#2F5FE0">LA</span><span class="nm">Você</span><b class="tnum">41h 25m</b></div>
+                  <div class="rk"><span class="n">7</span><span class="av" style="background:#5A6B3D">MT</span><span class="nm">Marcos T.</span><b class="tnum">41h 20m</b></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="base" aria-hidden="true"><span></span></div>
+</div>
+
+<style>
+  .laptop {
+    width: 100%;
+  }
+  .lid {
+    background: #1b1f29;
+    border-radius: 18px 18px 6px 6px;
+    padding: 1.6% 1.6% 2.2%;
+    box-shadow:
+      0 0 0 1px #2e3445,
+      0 50px 90px -30px rgb(0 0 0 / 0.75),
+      0 0 160px -40px rgb(91 140 255 / 0.4);
+  }
+  .screen {
+    container-type: inline-size;
+    aspect-ratio: 16 / 10;
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--bg);
+  }
+  .base {
+    position: relative;
+    width: 112%;
+    margin-left: -6%;
+    height: clamp(10px, 2.2vw, 18px);
+    background: linear-gradient(#3a4050, #22262f 60%, #15181e);
+    border-radius: 2px 2px 14px 14px;
+  }
+  .base span {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    translate: -50% 0;
+    width: 14%;
+    height: 40%;
+    background: #15181e;
+    border-radius: 0 0 8px 8px;
+  }
+
+  /* Interface: 1 --u = 1px numa tela de 1000px */
+  .ui {
+    --u: 0.1cqw;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    font-size: calc(var(--u) * 11);
+    line-height: 1.3;
+    color: var(--text);
+  }
+  .ui small {
+    display: block;
+    color: var(--muted);
+    font-size: calc(var(--u) * 9.5);
+  }
+  .ui svg {
+    flex: none;
+    width: calc(var(--u) * 16);
+    height: calc(var(--u) * 16);
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .browser {
+    flex: none;
+    height: calc(var(--u) * 28);
+    display: flex;
+    align-items: center;
+    gap: calc(var(--u) * 12);
+    padding: 0 calc(var(--u) * 12);
+    background: #0b0e14;
+    border-bottom: 1px solid var(--line);
+  }
+  .dots {
+    display: flex;
+    gap: calc(var(--u) * 6);
+  }
+  .dots i {
+    width: calc(var(--u) * 9);
+    height: calc(var(--u) * 9);
+    border-radius: 50%;
+    background: #2e3445;
+  }
+  .url {
+    flex: 0 1 calc(var(--u) * 360);
+    margin: 0 auto;
+    text-align: center;
+    background: var(--card);
+    border-radius: calc(var(--u) * 6);
+    padding: calc(var(--u) * 3) 0;
+    font-size: calc(var(--u) * 9.5);
+    color: var(--muted-2);
+  }
+  .app {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+  }
+
+  /* Barra lateral */
+  .side {
+    flex: none;
+    width: calc(var(--u) * 190);
+    background: #0b0e14;
+    border-right: 1px solid var(--line);
+    padding: calc(var(--u) * 16) calc(var(--u) * 12);
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--u) * 12);
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--u) * 7);
+    padding: 0 calc(var(--u) * 6);
+    font-size: calc(var(--u) * 19);
+    line-height: 1;
+  }
+  .logo img {
+    width: calc(var(--u) * 16);
+    height: calc(var(--u) * 16);
+  }
+  .new {
+    height: calc(var(--u) * 34);
+    border-radius: calc(var(--u) * 10);
+    background: var(--blue);
+    color: var(--ink);
+    font-weight: 800;
+    display: grid;
+    place-items: center;
+  }
+  .side nav {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--u) * 2);
+  }
+  .side nav span {
+    height: calc(var(--u) * 32);
+    display: flex;
+    align-items: center;
+    gap: calc(var(--u) * 9);
+    padding: 0 calc(var(--u) * 9);
+    border-radius: calc(var(--u) * 9);
+    color: var(--muted);
+  }
+  .side nav .on {
+    background: var(--card);
+    color: var(--text);
+    font-weight: 700;
+  }
+  .side nav em {
+    margin-left: auto;
+    font-style: normal;
+    font-weight: 800;
+    font-size: calc(var(--u) * 9.5);
+    color: var(--link);
+  }
+  .lbl {
+    padding: 0 calc(var(--u) * 9);
+    font-weight: 700;
+    margin-top: calc(var(--u) * 4);
+  }
+  .mine {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--u) * 2);
+    margin-top: calc(var(--u) * -6);
+  }
+  .mine span {
+    height: calc(var(--u) * 28);
+    display: flex;
+    align-items: center;
+    gap: calc(var(--u) * 8);
+    padding: 0 calc(var(--u) * 9);
+  }
+  .mine i {
+    width: calc(var(--u) * 8);
+    height: calc(var(--u) * 8);
+    border-radius: calc(var(--u) * 2);
+  }
+  .user {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: calc(var(--u) * 8);
+    padding: 0 calc(var(--u) * 4);
+  }
+  .user b {
+    display: block;
+  }
+
+  .av {
+    flex: none;
+    width: calc(var(--u) * 28);
+    height: calc(var(--u) * 28);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-weight: 800;
+    font-size: calc(var(--u) * 9.5);
+  }
+  .av.me {
+    background: var(--blue);
+    color: var(--ink);
+  }
+
+  /* Conteúdo */
+  .main {
+    flex: 1;
+    min-width: 0;
+    padding: calc(var(--u) * 20) calc(var(--u) * 24);
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--u) * 16);
+  }
+  .top {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+  .h1 {
+    display: block;
+    font-size: calc(var(--u) * 28);
+    font-weight: 900;
+    font-stretch: 125%;
+    line-height: 1.05;
+  }
+  .acts {
+    display: flex;
+    gap: calc(var(--u) * 6);
+  }
+  .acts span {
+    height: calc(var(--u) * 32);
+    padding: 0 calc(var(--u) * 13);
+    border-radius: calc(var(--u) * 9);
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+  }
+  .ghost {
+    border: 1px solid var(--line-2);
+  }
+  .white {
+    background: var(--text);
+    color: var(--ink);
+    font-weight: 800 !important;
+  }
+  .cols {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: calc(var(--u) * 14);
+    align-items: start;
+  }
+  .left,
+  .right {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--u) * 12);
+  }
+  .feat {
+    background: var(--blue);
+    color: var(--ink);
+    border-radius: calc(var(--u) * 18);
+    padding: calc(var(--u) * 18);
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--u) * 13);
+  }
+  .feat small {
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .feat-top {
+    display: flex;
+    justify-content: space-between;
+    gap: calc(var(--u) * 12);
+  }
+  .feat-top b {
+    display: block;
+    font-size: calc(var(--u) * 27);
+    font-weight: 900;
+    font-stretch: 125%;
+    line-height: 1;
+    margin-top: calc(var(--u) * 4);
+  }
+  .pos {
+    flex: none;
+    background: var(--ink);
+    color: var(--text);
+    border-radius: calc(var(--u) * 12);
+    padding: calc(var(--u) * 6) calc(var(--u) * 11);
+    text-align: center;
+    height: fit-content;
+  }
+  .feat .pos b {
+    font-size: calc(var(--u) * 21);
+    margin: 0;
+    font-stretch: 115%;
+  }
+  .feat .pos small {
+    color: #c9d3ea;
+    font-weight: 400;
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: calc(var(--u) * 8);
+  }
+  .stats span {
+    background: rgb(11 15 26 / 0.12);
+    border-radius: calc(var(--u) * 12);
+    padding: calc(var(--u) * 9) calc(var(--u) * 11);
+  }
+  .stats b {
+    display: block;
+    font-size: calc(var(--u) * 17);
+    font-weight: 900;
+    font-stretch: 115%;
+  }
+  .prog {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--u) * 5);
+  }
+  .prog-lbl {
+    display: flex;
+    justify-content: space-between;
+    font-size: calc(var(--u) * 9.5);
+    font-weight: 700;
+  }
+  .bar {
+    height: calc(var(--u) * 6);
+    border-radius: calc(var(--u) * 3);
+    background: rgb(11 15 26 / 0.2);
+    overflow: hidden;
+  }
+  .bar span {
+    display: block;
+    width: 48%;
+    height: 100%;
+    background: var(--ink);
+  }
+  .btns {
+    display: flex;
+    gap: calc(var(--u) * 6);
+  }
+  .btns span {
+    height: calc(var(--u) * 34);
+    padding: 0 calc(var(--u) * 15);
+    border-radius: calc(var(--u) * 10);
+    background: rgb(11 15 26 / 0.14);
+    display: flex;
+    align-items: center;
+    font-weight: 800;
+  }
+  .btns .dark {
+    background: var(--ink);
+    color: var(--text);
+  }
+
+  .card {
+    background: var(--card);
+    border-radius: calc(var(--u) * 16);
+    padding: calc(var(--u) * 14);
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--u) * 6);
+  }
+  .card-h {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: calc(var(--u) * 2);
+  }
+  .card-h b {
+    font-size: calc(var(--u) * 12);
+  }
+  .link {
+    color: var(--link);
+    font-weight: 700;
+    font-size: calc(var(--u) * 9.5);
+  }
+  .ci {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--u) * 10);
+    padding: calc(var(--u) * 3) 0;
+  }
+  .ci-t {
+    flex: 1;
+    min-width: 0;
+  }
+  .ci-t em {
+    font-style: normal;
+    color: var(--muted);
+  }
+  .ci-t small {
+    color: var(--muted-2);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .pts {
+    font-weight: 800;
+    font-size: calc(var(--u) * 9.5);
+    color: var(--link);
+  }
+  .thumb {
+    flex: none;
+    position: relative;
+    width: calc(var(--u) * 46);
+    height: calc(var(--u) * 34);
+    border-radius: calc(var(--u) * 7);
+    overflow: hidden;
+  }
+  .thumb i {
+    position: absolute;
+    left: 18%;
+    top: 18%;
+    width: 52%;
+    height: 56%;
+    background: #ede6d6;
+    border-radius: calc(var(--u) * 2);
+    rotate: -6deg;
+  }
+
+  .st-top {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--u) * 8);
+  }
+  .st-top :global(.cafe-ic) {
+    width: calc(var(--u) * 24);
+    height: calc(var(--u) * 24);
+    color: var(--pink);
+  }
+  .st-top b {
+    display: block;
+    font-size: calc(var(--u) * 14);
+    font-stretch: 115%;
+  }
+  .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    color: var(--muted);
+    font-size: calc(var(--u) * 8);
+    margin-top: calc(var(--u) * 4);
+  }
+  .day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: calc(var(--u) * 3);
+  }
+  .day i {
+    width: calc(var(--u) * 20);
+    height: calc(var(--u) * 20);
+    border-radius: 50%;
+    background: var(--card-2);
+    display: grid;
+    place-items: center;
+  }
+  .day i.feito {
+    background: var(--pink);
+  }
+  .day i.hoje {
+    background: transparent;
+    border: 1.5px dashed var(--pink);
+  }
+  .day svg {
+    width: calc(var(--u) * 10);
+    height: calc(var(--u) * 10);
+    stroke: var(--ink);
+    stroke-width: 3.4;
+  }
+  .big {
+    font-size: calc(var(--u) * 15) !important;
+    font-weight: 900;
+    font-stretch: 115%;
+  }
+  .mat {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--u) * 7);
+  }
+  .mat i {
+    width: calc(var(--u) * 7);
+    height: calc(var(--u) * 7);
+    border-radius: calc(var(--u) * 2);
+  }
+  .mat span {
+    flex: 1;
+  }
+  .run {
+    color: var(--link) !important;
+    font-weight: 700;
+  }
+  .rk {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--u) * 7);
+    padding: calc(var(--u) * 5) calc(var(--u) * 7);
+    border-radius: calc(var(--u) * 9);
+    background: var(--bg);
+    border: 1px solid var(--bg);
+  }
+  .rk.me {
+    background: var(--blue-soft);
+    border-color: var(--blue);
+  }
+  .rk .av {
+    width: calc(var(--u) * 22);
+    height: calc(var(--u) * 22);
+    font-size: calc(var(--u) * 8);
+  }
+  .rk .n {
+    width: calc(var(--u) * 8);
+    color: var(--muted);
+    font-weight: 800;
+  }
+  .rk .nm {
+    flex: 1;
+    font-weight: 700;
+  }
+</style>

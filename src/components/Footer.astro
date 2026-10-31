@@ -1,0 +1,57 @@
+---
+import { contatoEmail } from '../config';
+---
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <a class="brand" href="/" aria-label="Estugram, início">
+      <img src="/estugram-logo-branca.png" width="528" height="92" alt="estugram" />
+    </a>
+    <nav aria-label="Links do rodapé">
+      <a href="/blog">Blog</a>
+      <a href="/termos">Termos</a>
+      <a href="/privacidade">Privacidade</a>
+      <a href={`mailto:${contatoEmail}`}>Contato</a>
+    </nav>
+    <span class="copy">© {new Date().getFullYear()} Estugram</span>
+  </div>
+</footer>
+
+<style>
+  .foot {
+    border-top: 1px solid var(--line);
+    padding: 28px 0;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .foot-in {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 28px;
+  }
+  .brand img {
+    height: 22px;
+    width: auto;
+  }
+  nav {
+    display: flex;
+    gap: 18px;
+  }
+  nav a {
+    color: var(--muted-2);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  nav a:hover {
+    color: var(--text);
+  }
+  .copy {
+    margin-left: auto;
+  }
+  @media (max-width: 560px) {
+    .copy {
+      margin-left: 0;
+    }
+  }
+</style>

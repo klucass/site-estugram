@@ -1,0 +1,318 @@
+---
+// Página de um artigo: título, capa, texto numa coluna de leitura e, no fim,
+// o convite para o app e mais três artigos.
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import { Image, getImage } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getPosts, formatarData, minutosDeLeitura, type Post } from '../../lib/blog';
+import { signupUrl } from '../../config';
+
+export const getStaticPaths = (async () => {
+  const posts = await getPosts();
+  return posts.map((post, i) => ({
+    params: { slug: post.id },
+    props: {
+      post,
+      // Os mais novos depois deste, completando com os do começo da lista
+      outros: [...posts.slice(i + 1), ...posts.slice(0, i)].slice(0, 3),
+    },
+  }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  post: Post;
+  outros: Post[];
+}
+
+const { post, outros } = Astro.props;
+const { titulo, descricao, capa, capaAlt, data } = post.data;
+const { Content } = await render(post);
+const previa = await getImage({ src: capa, width: 1200, height: 630, fit: 'cover', format: 'jpg' });
+const endereco = new URL(Astro.url.pathname, Astro.site);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: titulo,
+  description: descricao,
+  image: new URL(previa.src, Astro.site).toString(),
+  url: endereco.toString(),
+  ...(data && { datePublished: data.toISOString() }),
+  publisher: { '@type': 'Organization', name: 'Estugram', url: Astro.site?.toString() },
+};
+---
+
+<Base title={`${titulo} · Blog do Estugram`} description={descricao} imagem={previa.src} tipo="article">
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <Header />
+
+  <main id="conteudo" class="artigo">
+    <div class="brilho" aria-hidden="true"></div>
+    <article>
+      <header class="wrap estreito cabeca" data-reveal>
+        <a class="voltar" href="/blog"><span aria-hidden="true">←</span> Blog</a>
+        <h1>{titulo}</h1>
+        <p class="linha-fina">{descricao}</p>
+        <p class="meta">
+          {data && <time datetime={data.toISOString()}>{formatarData(data)}</time>}
+          <span>{minutosDeLeitura(post)} min de leitura</span>
+        </p>
+      </header>
+
+      <div class="wrap capa" data-reveal="scale" style="--d:1">
+        <Image src={capa} alt={capaAlt} widths={[640, 1100, 1600]} sizes="(max-width: 1160px) 100vw, 1096px" loading="eager" fetchpriority="high" />
+      </div>
+
+      <div class="wrap estreito texto">
+        <Content />
+      </div>
+    </article>
+
+    <aside class="wrap estreito" aria-label="Conheça o Estugram">
+      <div class="convite card">
+        <h2>Estude junto com seus amigos</h2>
+        <p>
+          No Estugram você registra o que estudou, acompanha seu desempenho e cria desafios com amigos, com check-in,
+          feed e ranking.
+        </p>
+        <a class="btn btn-primary" href={signupUrl('blog')}>Criar desafio <span class="seta" aria-hidden="true">→</span></a>
+      </div>
+    </aside>
+
+    {
+      outros.length > 0 && (
+        <section class="wrap mais" aria-labelledby="mais-titulo">
+          <h2 id="mais-titulo">Continue lendo</h2>
+          <ul>
+            {outros.map((p, i) => (
+              <li data-reveal style={`--d:${i}`}>
+                <PostCard post={p} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+  </main>
+
+  <Footer />
+</Base>
+
+<style>
+  .artigo {
+    position: relative;
+    isolation: isolate;
+    overflow-x: clip;
+    padding: clamp(40px, 6vw, 80px) 0 clamp(72px, 10vw, 128px);
+  }
+  .brilho {
+    position: absolute;
+    z-index: -1;
+    left: 50%;
+    top: -260px;
+    width: min(1100px, 150vw);
+    height: 600px;
+    translate: -50% 0;
+    background: radial-gradient(closest-side, rgb(91 140 255 / 0.16), transparent);
+    pointer-events: none;
+  }
+  .estreito {
+    max-width: calc(760px + 2 * var(--gutter));
+  }
+
+  .cabeca {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: clamp(32px, 5vw, 56px);
+  }
+  .voltar {
+    align-self: flex-start;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: color 0.3s ease;
+  }
+  .voltar span {
+    display: inline-block;
+    transition: translate 0.4s var(--ease-out);
+  }
+  .voltar:hover {
+    color: var(--text);
+  }
+  .voltar:hover span {
+    translate: -3px 0;
+  }
+  h1 {
+    font-size: clamp(34px, 5.4vw, 60px);
+    letter-spacing: -0.03em;
+  }
+  .linha-fina {
+    color: var(--muted-2);
+    font-size: clamp(18px, 1.8vw, 21px);
+    line-height: 1.5;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  .capa img {
+    width: 100%;
+    aspect-ratio: 2 / 1;
+    object-fit: cover;
+    border-radius: var(--radius);
+    background: var(--card-2);
+  }
+  @media (max-width: 640px) {
+    .capa img {
+      aspect-ratio: 4 / 3;
+    }
+  }
+
+  /* Texto do artigo, vindo do Markdown */
+  .texto {
+    margin-top: clamp(40px, 6vw, 64px);
+    color: var(--muted-2);
+    font-size: 18px;
+    line-height: 1.8;
+  }
+  .texto :global(> * + *) {
+    margin-top: 1.1em;
+  }
+  .texto :global(h2),
+  .texto :global(h3),
+  .texto :global(h4) {
+    color: var(--text);
+    font-stretch: 115%;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-top: 2em;
+    margin-bottom: -0.2em;
+  }
+  .texto :global(h2) {
+    font-size: clamp(26px, 3vw, 32px);
+  }
+  .texto :global(h3) {
+    font-size: clamp(21px, 2.2vw, 25px);
+  }
+  .texto :global(h4) {
+    font-size: 19px;
+  }
+  .texto :global(strong) {
+    color: var(--text);
+  }
+  .texto :global(a) {
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+  .texto :global(ul),
+  .texto :global(ol) {
+    padding-left: 24px;
+  }
+  .texto :global(li + li) {
+    margin-top: 0.5em;
+  }
+  .texto :global(li::marker) {
+    color: var(--blue);
+    font-weight: 800;
+  }
+  .texto :global(blockquote) {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 4px 0 4px 22px;
+    border-left: 3px solid var(--pink);
+    color: var(--text);
+    font-size: 20px;
+    font-style: italic;
+  }
+  .texto :global(img) {
+    border-radius: 14px;
+    height: auto;
+  }
+  .texto :global(hr) {
+    border: 0;
+    border-top: 1px solid var(--line-2);
+    margin: 2.4em 0;
+  }
+  .texto :global(code) {
+    padding: 2px 6px;
+    border-radius: 6px;
+    background: var(--card-2);
+    font-size: 0.9em;
+  }
+  .texto :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+  }
+  .texto :global(th),
+  .texto :global(td) {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line-2);
+    text-align: left;
+  }
+
+  .convite {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    margin-top: clamp(56px, 8vw, 88px);
+    padding: clamp(28px, 4vw, 40px);
+    border: 1px solid var(--line-2);
+    background:
+      radial-gradient(120% 140% at 100% 0%, rgb(91 140 255 / 0.18), transparent 60%),
+      var(--card);
+  }
+  .convite h2 {
+    font-size: clamp(26px, 3.2vw, 34px);
+  }
+  .convite p {
+    color: var(--muted-2);
+    margin-bottom: 8px;
+  }
+
+  .mais {
+    margin-top: clamp(72px, 10vw, 112px);
+  }
+  .mais h2 {
+    font-size: clamp(28px, 3.6vw, 40px);
+    margin-bottom: clamp(24px, 3vw, 36px);
+  }
+  .mais ul {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(16px, 2.4vw, 28px);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .mais li {
+    display: flex;
+  }
+  .mais li > :global(*) {
+    flex: 1;
+  }
+  @media (max-width: 1000px) {
+    .mais ul {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .mais li:nth-child(3) {
+      display: none;
+    }
+  }
+  @media (max-width: 640px) {
+    .mais ul {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

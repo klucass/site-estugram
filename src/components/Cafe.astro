@@ -1,0 +1,58 @@
+---
+// Xícara de café: ícone da reação "cafezinho" e da sequência de dias.
+interface Props {
+  size?: number;
+  /** Preenche a xícara com a cor atual (versão "ativa"). */
+  filled?: boolean;
+  /** Fumaça subindo devagar, para os lugares de destaque. */
+  fumaca?: boolean;
+  class?: string;
+  style?: string;
+}
+
+const { size = 18, filled = false, fumaca = false, class: className, style } = Astro.props;
+---
+
+<svg
+  class:list={['cafe-svg', className, { fumaca }]}
+  style={style}
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.9"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  <path class="xic" fill={filled ? 'currentColor' : 'none'} d="M4 9.5h12v4.5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"></path>
+  <path d="M16 11h1.5a2.5 2.5 0 0 1 0 5H16M3 21.5h14"></path>
+  <path class="vapor v1" d="M8 3.5c-.9 1 .9 2 0 3.2"></path>
+  <path class="vapor v2" d="M12 3.5c-.9 1 .9 2 0 3.2"></path>
+</svg>
+
+<style>
+  .fumaca {
+    overflow: visible;
+  }
+  .fumaca .vapor {
+    animation: vapor 2.8s ease-in-out infinite;
+  }
+  .fumaca .v2 {
+    animation-delay: 1.4s;
+  }
+  @keyframes vapor {
+    0% {
+      opacity: 0;
+      translate: 0 1.5px;
+    }
+    35% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      translate: 0 -2.5px;
+    }
+  }
+</style>

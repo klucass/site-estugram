@@ -1,0 +1,312 @@
+---
+import Cafe from './Cafe.astro';
+
+interface Props {
+  nome: string;
+  ini: string;
+  cor: string;
+  quando: string;
+  pontos: string;
+  tempo: string;
+  materia: string;
+  materiaCor: string;
+  questoes: string;
+  legenda: string;
+  cafes: number;
+  comentarios: number;
+  fotoBg: string;
+  fotoAlt: string;
+}
+
+const p = Astro.props;
+---
+
+<article class="post card">
+  <div class="who">
+    <span class="avatar" style={`background:${p.cor}`}>{p.ini}</span>
+    <div class="meta">
+      <b>{p.nome}</b>
+      <small>{p.quando}</small>
+    </div>
+    <span class="pts">{p.pontos}</span>
+  </div>
+
+  <div class="foto" role="img" aria-label={p.fotoAlt} style={`background:${p.fotoBg}`}>
+    <span class="paper" aria-hidden="true"></span>
+    <span class="ln l1" aria-hidden="true"></span>
+    <span class="ln l2" aria-hidden="true"></span>
+    <span class="ln l3" aria-hidden="true"></span>
+    <span class="cup" aria-hidden="true"></span>
+    <span class="tag">foto do check-in</span>
+  </div>
+
+  <div class="body">
+    <div class="nums">
+      <span class="tempo tnum">{p.tempo}</span>
+      <span class="mat"><i style={`background:${p.materiaCor}`}></i>{p.materia}</span>
+      <span class="q">{p.questoes}</span>
+    </div>
+    <p>{p.legenda}</p>
+  </div>
+
+  <div class="acts">
+    <button type="button" class="cafe" aria-pressed="false" data-base={p.cafes}>
+      <Cafe />
+      <span class="n">{p.cafes}</span><span class="sr"> cafezinhos, mandar um cafezinho</span>
+    </button>
+    <span class="com">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"></path></svg>
+      {p.comentarios}<span class="sr"> comentários</span>
+    </span>
+  </div>
+</article>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.post .cafe').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const on = btn.getAttribute('aria-pressed') !== 'true';
+      btn.setAttribute('aria-pressed', String(on));
+      const base = Number(btn.dataset.base);
+      btn.querySelector('.n')!.textContent = String(base + (on ? 1 : 0));
+      if (!on || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      // Pequena explosão de bolinhas saindo da xícara
+      btn.classList.remove('pop');
+      void btn.offsetWidth;
+      btn.classList.add('pop');
+      for (let i = 0; i < 8; i++) {
+        const b = document.createElement('i');
+        b.className = 'faisca';
+        const ang = (i / 8) * Math.PI * 2 + Math.random() * 0.4;
+        const dist = 22 + Math.random() * 14;
+        b.style.setProperty('--x', `${Math.cos(ang) * dist}px`);
+        b.style.setProperty('--y', `${Math.sin(ang) * dist - 6}px`);
+        btn.appendChild(b);
+        b.addEventListener('animationend', () => b.remove());
+      }
+    });
+  });
+</script>
+
+<style>
+  .post {
+    overflow: hidden;
+    width: 100%;
+  }
+  .who {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+  }
+  .meta {
+    flex: 1;
+    line-height: 1.25;
+    min-width: 0;
+  }
+  .meta b {
+    display: block;
+    font-size: 15px;
+  }
+  .meta small {
+    color: var(--muted);
+    font-size: 12px;
+  }
+  .pts {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 5px 9px;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--link);
+  }
+  .foto {
+    position: relative;
+    height: 190px;
+    overflow: hidden;
+  }
+  .foto > span {
+    transition: transform 1.2s var(--ease-out);
+  }
+  .post:hover .foto > span:not(.tag) {
+    transform: scale(1.04);
+  }
+  .paper {
+    position: absolute;
+    left: 34px;
+    top: 34px;
+    width: 170px;
+    height: 120px;
+    background: #ede6d6;
+    border-radius: 6px;
+    rotate: -6deg;
+  }
+  .ln {
+    position: absolute;
+    height: 4px;
+    background: #9aa0ac;
+    rotate: -6deg;
+  }
+  .l1 {
+    left: 52px;
+    top: 58px;
+    width: 120px;
+  }
+  .l2 {
+    left: 54px;
+    top: 76px;
+    width: 96px;
+  }
+  .l3 {
+    left: 56px;
+    top: 94px;
+    width: 110px;
+  }
+  .cup {
+    position: absolute;
+    right: 44px;
+    top: 46px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #2a2f3b;
+    border: 8px solid #d9d2c3;
+  }
+  .tag {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    background: rgb(11 15 26 / 0.75);
+    color: var(--text);
+    font-size: 11px;
+    border-radius: 8px;
+    padding: 4px 8px;
+  }
+  .body {
+    padding: 12px 14px 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .nums {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px 10px;
+  }
+  .tempo {
+    font-size: 26px;
+    font-weight: 900;
+    font-stretch: 125%;
+  }
+  .mat {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .mat i {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+  }
+  .q {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .body p {
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .acts {
+    display: flex;
+    gap: 4px;
+    padding: 4px 6px 8px;
+  }
+  .cafe,
+  .com {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 12px;
+    border-radius: 12px;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--muted-2);
+  }
+  .cafe {
+    position: relative;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    transition:
+      background 0.3s ease,
+      color 0.3s ease;
+  }
+  .cafe :global(svg) {
+    transition: transform 0.5s var(--ease-out);
+  }
+  .cafe.pop :global(svg) {
+    animation: pop 0.6s var(--ease-out);
+  }
+  @keyframes pop {
+    0% {
+      transform: scale(1);
+    }
+    30% {
+      transform: scale(1.45) rotate(-12deg);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  .cafe :global(.faisca) {
+    position: absolute;
+    left: 21px;
+    top: 50%;
+    width: 6px;
+    height: 6px;
+    margin: -3px;
+    border-radius: 50%;
+    background: var(--pink);
+    pointer-events: none;
+    animation: faisca 0.7s var(--ease-out) forwards;
+  }
+  .cafe :global(.faisca:nth-child(odd)) {
+    background: #ffc2d6;
+    width: 4px;
+    height: 4px;
+  }
+  @keyframes faisca {
+    from {
+      translate: 0 0;
+      opacity: 1;
+      scale: 1;
+    }
+    to {
+      translate: var(--x) var(--y);
+      opacity: 0;
+      scale: 0.4;
+    }
+  }
+  .cafe:hover {
+    background: var(--card-2);
+  }
+  .cafe[aria-pressed='true'] {
+    background: rgb(255 77 138 / 0.16);
+    color: var(--pink-soft);
+  }
+  .cafe[aria-pressed='true'] :global(.xic) {
+    fill: currentColor;
+  }
+  .sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+</style>

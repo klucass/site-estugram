@@ -1,0 +1,366 @@
+---
+import Cafe from './Cafe.astro';
+
+// Tela "Meus desafios" do protótipo, reduzida para caber no herói.
+const semana = [
+  { d: 'S', estado: 'feito' },
+  { d: 'T', estado: 'feito' },
+  { d: 'Q', estado: 'feito' },
+  { d: 'Q', estado: 'hoje' },
+  { d: 'S', estado: '' },
+  { d: 'S', estado: '' },
+  { d: 'D', estado: '' },
+];
+---
+
+<div class="phone" role="img" aria-label="Tela do app: 11 dias seguidos e o desafio Maratona TRF Outubro, dia 15 de 31, em 6º lugar de 18">
+  <div class="notch" aria-hidden="true"></div>
+  <div class="screen" aria-hidden="true">
+    <div class="head">
+      <span class="title">Desafios</span>
+      <span class="me">LA</span>
+    </div>
+
+    <div class="streak">
+      <div class="streak-top">
+        <Cafe size={22} filled style="color:#FF4D8A" />
+        <div>
+          <b>11 dias seguidos</b>
+          <small>Veja os estudos que você já registrou</small>
+        </div>
+      </div>
+      <div class="days">
+        {
+          semana.map((s) => (
+            <span class="day">
+              <i class={s.estado}>
+                {s.estado === 'feito' && (
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#0B0F1A" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
+                )}
+              </i>
+              {s.d}
+            </span>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <div class="hc-top">
+        <div>
+          <small>Dia 15 de 31 · horas</small>
+          <b>Maratona TRF Outubro</b>
+        </div>
+        <span class="pos"><b>6º</b><small>de 18</small></span>
+      </div>
+      <div class="bar"><span></span></div>
+      <div class="hc-foot">
+        <span class="stack">
+          <span class="av" style="background:#8A5A44">JP</span>
+          <span class="av" style="background:#3F6E5A">RL</span>
+          <span class="av" style="background:#6A4C93">AS</span>
+        </span>
+        <span>Você: 41h 25m · 9h 15m do 5º</span>
+      </div>
+      <div class="hc-btns">
+        <span class="b1">+ Check-in</span>
+        <span class="b2">Abrir desafio</span>
+      </div>
+    </div>
+
+    <small class="label">Também participando</small>
+    <div class="row">
+      <span class="sq" style="background:#FF4D8A">Q</span>
+      <span class="txt"><b>Cursinho Turma B · questões</b><small>1.180 questões · termina em 9 dias</small></span>
+      <b class="rk">3º</b>
+    </div>
+    <div class="row">
+      <span class="sq" style="background:#F5C451">P</span>
+      <span class="txt"><b>Pomodoros da firma</b><small>Pontuação individual</small></span>
+      <b class="rk">2º</b>
+    </div>
+
+    <div class="tabbar">
+      <span class="on">Desafios</span>
+      <span>Timer</span>
+      <span class="plus">+</span>
+      <span>Atividade</span>
+      <span>Perfil</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .phone {
+    position: relative;
+    width: 300px;
+    max-width: 100%;
+    aspect-ratio: 390 / 812;
+    border-radius: 46px;
+    padding: 10px;
+    background: #1b1f29;
+    box-shadow:
+      0 0 0 1px #2e3445,
+      0 40px 80px -20px rgb(0 0 0 / 0.7),
+      0 0 120px -30px rgb(91 140 255 / 0.45);
+  }
+  .notch {
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    translate: -50% 0;
+    width: 84px;
+    height: 24px;
+    border-radius: 14px;
+    background: #000;
+    z-index: 2;
+  }
+  .screen {
+    position: relative;
+    height: 100%;
+    border-radius: 37px;
+    overflow: hidden;
+    background: var(--bg);
+    padding: 46px 14px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+    font-size: 11px;
+    line-height: 1.25;
+  }
+  small {
+    display: block;
+    color: var(--muted);
+    font-size: 9.5px;
+  }
+  .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .title {
+    font-size: 23px;
+    font-weight: 800;
+    font-stretch: 125%;
+  }
+  .me {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--blue);
+    color: var(--ink);
+    font-weight: 800;
+    display: grid;
+    place-items: center;
+  }
+  .streak {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 10px 11px;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+  .streak-top {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .streak-top b {
+    font-size: 13.5px;
+    font-stretch: 115%;
+  }
+  .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    color: var(--muted);
+    font-size: 8.5px;
+  }
+  .day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+  }
+  .day i {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--card-2);
+    display: grid;
+    place-items: center;
+  }
+  .day i.feito {
+    background: var(--pink);
+  }
+  .day i.hoje {
+    background: transparent;
+    border: 1.5px dashed var(--pink);
+  }
+  .hero-card {
+    background: var(--blue);
+    color: var(--ink);
+    border-radius: 17px;
+    padding: 13px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .hero-card small {
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 9.5px;
+  }
+  .hc-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .hc-top b {
+    display: block;
+    font-size: 17px;
+    font-weight: 900;
+    font-stretch: 125%;
+    line-height: 1.05;
+    margin-top: 3px;
+  }
+  .pos {
+    background: var(--ink);
+    color: var(--text);
+    border-radius: 9px;
+    padding: 4px 7px;
+    text-align: center;
+    height: fit-content;
+  }
+  .pos b {
+    font-size: 15px !important;
+    margin: 0 !important;
+  }
+  .pos small {
+    color: #c9d3ea !important;
+    font-weight: 400 !important;
+  }
+  .bar {
+    height: 6px;
+    border-radius: 3px;
+    background: rgb(11 15 26 / 0.2);
+    overflow: hidden;
+  }
+  .bar span {
+    display: block;
+    width: 48%;
+    height: 100%;
+    background: var(--ink);
+  }
+  .hc-foot {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 10px;
+  }
+  .stack {
+    display: flex;
+  }
+  .av {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 8px;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+    border: 1.5px solid var(--blue);
+  }
+  .av + .av {
+    margin-left: -6px;
+  }
+  .hc-btns {
+    display: flex;
+    gap: 6px;
+  }
+  .hc-btns span {
+    flex: 1;
+    height: 34px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+  }
+  .b1 {
+    background: var(--ink);
+    color: var(--text);
+  }
+  .b2 {
+    background: rgb(11 15 26 / 0.14);
+  }
+  .label {
+    font-weight: 700;
+    font-size: 10.5px;
+  }
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    background: var(--card);
+    border-radius: 12px;
+    padding: 8px 10px;
+  }
+  .sq {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    color: var(--ink);
+    font-weight: 900;
+    font-stretch: 125%;
+    display: grid;
+    place-items: center;
+    flex: none;
+  }
+  .txt {
+    flex: 1;
+    min-width: 0;
+  }
+  .txt b {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .rk {
+    font-size: 14px;
+  }
+  .tabbar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 62px;
+    border-top: 1px solid var(--line);
+    background: var(--bg);
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding-top: 10px;
+    font-size: 8px;
+    color: var(--muted);
+  }
+  .tabbar .on {
+    color: var(--text);
+    font-weight: 700;
+  }
+  .plus {
+    width: 40px;
+    height: 40px;
+    margin-top: -14px;
+    border-radius: 13px;
+    background: var(--blue);
+    color: var(--ink);
+    font-size: 22px;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+  }
+</style>
