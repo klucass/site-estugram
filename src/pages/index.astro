@@ -843,7 +843,7 @@ const seta = "→";
     position: relative;
     padding: clamp(36px, 5vw, 72px) 0 clamp(64px, 8vw, 112px);
     margin-top: -72px;
-    padding-top: calc(72px + clamp(36px, 5vw, 72px));
+    padding-top: calc(72px + clamp(24px, min(5vw, 4.5vh), 72px));
     overflow: hidden;
     isolation: isolate;
   }
@@ -918,7 +918,7 @@ const seta = "→";
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 22px;
+    gap: clamp(14px, 2.4vh, 22px);
     max-width: 1040px;
     margin: 0 auto;
     text-align: center;
@@ -961,7 +961,8 @@ const seta = "→";
   .hero h1 {
     width: 100%;
     max-width: 1040px;
-    font-size: clamp(38px, 5.6vw, 80px);
+    /* Limitado também pela altura da tela, para o print aparecer na primeira dobra */
+    font-size: clamp(36px, min(5.6vw, 7.4vh), 80px);
     font-stretch: 112%;
     line-height: 1.04;
     letter-spacing: -0.03em;
@@ -1024,7 +1025,7 @@ const seta = "→";
     --p: 1;
     position: relative;
     max-width: 1060px;
-    margin: clamp(48px, 6vw, 80px) auto 0;
+    margin: clamp(32px, min(6vw, 6vh), 80px) auto 0;
   }
   :global(.js) .hero-visual {
     --p: 0;
