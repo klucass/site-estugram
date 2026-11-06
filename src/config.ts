@@ -3,6 +3,11 @@
 export const appUrl = 'https://app.estugram.com';
 export const contatoEmail = 'ajuda@estugram.com';
 
+export const redes = {
+  instagram: { usuario: 'estugram.app', url: 'https://www.instagram.com/estugram.app/' },
+  twitter: { usuario: 'estugramapp', url: 'https://x.com/estugramapp' },
+};
+
 /** Link do app com UTM indicando de qual botão da página veio o clique. */
 export function signupUrl(placement: string) {
   const url = new URL(appUrl);
