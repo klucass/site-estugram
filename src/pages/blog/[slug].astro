@@ -31,7 +31,17 @@ interface Props {
 const { post, outros } = Astro.props;
 const { titulo, descricao, capa, capaAlt, data } = post.data;
 const { Content } = await render(post);
-const previa = await getImage({ src: capa, width: 1200, height: 630, fit: 'cover', format: 'jpg' });
+// Prévia de link em 1.91:1, de no máximo 1200x630. As capas menores que isso não são ampliadas,
+// então o recorte cabe dentro da original para o tamanho declarado no og:image bater com o arquivo.
+const previaLargura = Math.min(1200, capa.width, Math.floor((capa.height * 1200) / 630));
+const previaAltura = Math.round((previaLargura * 630) / 1200);
+const previa = await getImage({
+  src: capa,
+  width: previaLargura,
+  height: previaAltura,
+  fit: 'cover',
+  format: 'jpg',
+});
 const endereco = new URL(Astro.url.pathname, Astro.site);
 
 const jsonLd = {
@@ -46,7 +56,14 @@ const jsonLd = {
 };
 ---
 
-<Base title={`${titulo} · Blog do Estugram`} description={descricao} imagem={previa.src} tipo="article">
+<Base
+  title={`${titulo} · Blog do Estugram`}
+  description={descricao}
+  imagem={previa.src}
+  imagemLargura={previaLargura}
+  imagemAltura={previaAltura}
+  tipo="article"
+>
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <Header />
 
