@@ -1,0 +1,196 @@
+<!doctype html>
+<!-- Fonte da imagem de prévia de link (public/og.jpg). Para gerar de novo: npm run og -->
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=block"
+    />
+    <style>
+      :root {
+        --bg: #0e1117;
+        --text: #f2f4f8;
+        --muted: #a3abbd;
+        --blue: #5b8cff;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'Archivo', sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      .cena {
+        position: relative;
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+        isolation: isolate;
+      }
+
+      /* Fundo: as mesmas manchas de luz e a grade fina do herói da landing */
+      .aurora i {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(90px);
+        z-index: -2;
+      }
+      .a1 {
+        width: 620px;
+        height: 420px;
+        left: 40px;
+        top: 260px;
+        background: rgb(91 140 255 / 0.3);
+      }
+      .a2 {
+        width: 520px;
+        height: 380px;
+        right: 20px;
+        top: 300px;
+        background: rgb(255 77 138 / 0.14);
+      }
+      .a3 {
+        width: 700px;
+        height: 260px;
+        left: 250px;
+        top: -80px;
+        background: rgb(0 209 209 / 0.07);
+      }
+      .grade {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background-image:
+          linear-gradient(rgb(255 255 255 / 0.035) 1px, transparent 1px),
+          linear-gradient(90deg, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+        background-size: 64px 64px;
+        background-position: -8px -16px;
+        mask-image: radial-gradient(ellipse 70% 70% at 50% 30%, #000 30%, transparent 85%);
+      }
+
+      .logo {
+        position: absolute;
+        top: 34px;
+        left: 50%;
+        translate: -50% 0;
+        height: 26px;
+      }
+
+      .copy {
+        position: absolute;
+        top: 92px;
+        left: 0;
+        right: 0;
+        text-align: center;
+      }
+      h1 {
+        margin: 0 auto;
+        max-width: 1000px;
+        font-size: 58px;
+        font-weight: 800;
+        font-stretch: 112%;
+        line-height: 1.04;
+        letter-spacing: -0.03em;
+        text-wrap: balance;
+      }
+      h1 em {
+        font-style: normal;
+        color: var(--blue);
+      }
+
+      /* Print da sala numa janela de navegador, cortado pela borda de baixo */
+      .janela {
+        position: absolute;
+        left: 50%;
+        top: 262px;
+        width: 1000px;
+        translate: -50% 0;
+        border-radius: 14px;
+        background: #0a0d12;
+        border: 1px solid rgb(255 255 255 / 0.1);
+        box-shadow:
+          0 0 0 1px rgb(0 0 0 / 0.6),
+          0 -10px 60px -20px rgb(0 0 0 / 0.8),
+          0 0 140px -30px rgb(91 140 255 / 0.35);
+        overflow: hidden;
+      }
+      .janela::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background: linear-gradient(180deg, rgb(255 255 255 / 0.07), transparent 22%);
+      }
+      .barra {
+        display: flex;
+        align-items: center;
+        height: 34px;
+        padding: 0 14px;
+        background: #12161e;
+        border-bottom: 1px solid rgb(255 255 255 / 0.05);
+      }
+      .pontos {
+        display: flex;
+        gap: 6px;
+      }
+      .pontos i {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: #2a303d;
+      }
+      .url {
+        margin: 0 auto;
+        translate: -24px 0;
+        font-size: 11px;
+        color: var(--muted);
+        background: #0c0f15;
+        border-radius: 7px;
+        padding: 3px 22px;
+      }
+      /* Recorte com zoom na sala e na coluna da direita (coordenadas do sala@2x.webp, 2880x1800) */
+      .vista {
+        position: relative;
+        height: 400px;
+        overflow: hidden;
+      }
+      .vista img {
+        position: absolute;
+        width: calc(2880px * var(--s));
+        left: calc(-520px * var(--s));
+        top: calc(-400px * var(--s));
+        --s: 0.4329;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cena">
+      <div class="aurora"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+      <div class="grade"></div>
+
+      <img class="logo" src="../public/estugram-logo-branca.png" alt="" />
+
+      <div class="copy">
+        <h1>Mantenha a motivação em alta estudando com os <em>amigos</em>.</h1>
+      </div>
+
+      <div class="janela">
+        <div class="barra">
+          <span class="pontos"><i></i><i></i><i></i></span>
+          <span class="url">app.estugram.com</span>
+        </div>
+        <div class="vista"><img src="../public/telas/sala@2x.webp" alt="" /></div>
+      </div>
+    </div>
+  </body>
