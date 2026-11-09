@@ -62,6 +62,10 @@ Matéria e assunto são obrigatórios, porque é deles que saem as estatísticas
 
 A janela de registro abre com a última matéria e o último assunto que você usou neste navegador. Se vai estudar a mesma coisa em várias sessões seguidas, é só confirmar e salvar.
 
+![Timer do Estugram no modo cronômetro marcando 00:03, com as opções Cronômetro e Pomodoro no topo, o botão Pausar e o link Finalizar e registrar](./imagens/registrar-horas-timer.webp)
+
+*O timer rodando no modo cronômetro. As telas deste artigo são da nova versão do Estugram, que está em teste com um grupo de usuários, com dados de exemplo.*
+
 ### Cronômetro ou Pomodoro?
 
 O cronômetro combina com um bloco de questões ou uma aula longa, quando você vai ficar um bom tempo no mesmo assunto. O Pomodoro ajuda quando o difícil é começar, ou quando você perde o fio depois de meia hora.
@@ -82,11 +86,19 @@ Serve para os dias em que você estudou no ônibus ou na biblioteca e só lembro
 
 Também dá para editar e apagar. Errou a matéria? Abra a sessão e corrija. Lançou duas vezes? Apague uma, e as estatísticas do dia são recalculadas.
 
-Uma exceção: a sessão que já entrou num check-in de desafio só pode ser alterada depois que você apagar o check-in.
+![Painel do dia no histórico do Estugram: quinta, 15 de outubro, 3h 12m em 2 sessões, com Português de 08:30 a 10:18 e Direito Constitucional de 14:02 a 15:26 com 40 questões e 85% de acerto, cada uma com Editar e Apagar](./imagens/registrar-horas-dia.webp)
+
+*Clicando num dia do calendário, você vê as sessões com horário, assunto e questões, e pode editar ou apagar cada uma.*
+
+Se você participa dos desafios com amigos, que também estão em teste com um grupo de usuários, há uma exceção: a sessão que já entrou num check-in só pode ser alterada depois que você apagar o check-in.
 
 ## Como usar o histórico na semana
 
 O histórico mostra o mês em calendário, com o tempo estudado em cada dia e uma barra por matéria. Quanto mais azul o dia, mais horas ele tem. Os dias escuros ficaram sem estudo, e tudo bem: é só um dado para o planejamento.
+
+![Calendário de outubro no histórico do Estugram, com o tempo estudado em cada dia, como 7h 10m no dia 5 e 1h 00m no dia 13, barras coloridas por matéria e os dias 2, 3 e 9 sem estudo](./imagens/registrar-horas-historico.webp)
+
+*O calendário do mês: dias mais claros tiveram mais horas, e a barra de cada dia mostra as matérias estudadas.*
 
 Uma revisão semanal de dez minutos, no domingo à noite ou na segunda cedo, já basta.
 

@@ -59,6 +59,27 @@ O código do app fica no projeto irmão `../appestugram`. Antes de escrever sobr
 
 Commits de infraestrutura, segurança, testes e refatoração não são novidade para o usuário. Ignore.
 
+**Versão nova do app.** As especificações em `docs/requisitos/` descrevem a versão nova do Estugram (a área `/desafio`), que hoje é só por convite, com lista de espera (`03-F21-acesso-por-convite.md` e o commit "acesso restrito à área /desafio"). Tudo o que vem dessas especificações (timer novo, histórico com "Adicionar sessão", ciclo novo, desafios, sala) está em teste com um grupo de usuários. Diga isso uma vez no artigo, na legenda do primeiro print ou na primeira menção à tela. Se o log mostrar que a área foi aberta para todos, a ressalva deixa de valer.
+
+## Prints das telas (Bia, obrigatório)
+
+Todo artigo da Bia que explica uma tela do app mostra essa tela. Leitor que vê o botão acha o botão. Use de 1 a 3 prints, um para cada tela explicada (timer, histórico, revisões, ciclo, estatísticas...). O Caio pode usar um print quando citar o app, mas não precisa.
+
+1. **Fonte.** Os prints ficam em `public/telas/`: `<tela>@2x.webp` (desktop, 2880 × 1800) e `<tela>-movel.webp` (celular, 780 × 1688). Telas disponíveis: `timer`, `historico`, `revisoes`, `ciclo`, `estatisticas`, `inicio`, `checkin`, `ranking`, `sala`. Não invente nem desenhe tela. Se a tela que o artigo explica não está ali, escreva sem print e diga isso na resposta final.
+2. **Olhe antes.** Converta para ver: `magick public/telas/<tela>@2x.webp -resize 1400x .rotina/fotos/tela.png` e leia o PNG (Read). Anote as coordenadas da parte que interessa (no PNG de 1400 px, multiplique por 2,057 para ter a coordenada no original).
+3. **Recorte a parte que o texto explica**, nunca a tela inteira: a coluna do artigo tem uns 700 px, e a tela inteira fica ilegível. Um recorte de 700 a 1500 px de largura no original funciona bem. Deixe de fora a barra lateral, os nomes de desafios e o botão de check-in, a não ser que o artigo seja sobre desafios.
+   `magick public/telas/<tela>@2x.webp -crop <L>x<A>+<X>+<Y> +repage -quality 85 src/content/blog/imagens/<slug>-<parte>.webp`
+4. **Confira o recorte**: converta para PNG em `.rotina/fotos/` e leia. O texto da tela tem que estar legível e nada pode aparecer cortado pela metade. Ajuste até ficar bom.
+5. **Insira no ponto do texto que explica a tela**, logo depois do parágrafo ou do passo a passo:
+
+   ```markdown
+   ![Descrição do que a tela mostra, com os números e botões visíveis](./imagens/<slug>-<parte>.webp)
+
+   *Legenda curta dizendo o que olhar no print.*
+   ```
+
+   O texto alternativo descreve a tela de verdade (ajuda quem usa leitor de tela e o Google Imagens). Os prints usam dados de exemplo: diga isso na legenda do primeiro, junto com a ressalva da versão nova.
+
 ## Escolha da pauta
 
 As filas ficam em `pautas.md`, nesta pasta, uma por autor. Pegue a **primeira pauta `pendente`** da fila do autor do dia.
@@ -202,7 +223,7 @@ Na resposta final, liste em poucas linhas os padrões que o humanizer encontrou 
 4. Plano interno: público, keyword principal e secundárias, intenção, ângulo, perguntas do FAQ, fontes (Caio).
 5. Pesquise e confira as fontes (WebSearch e WebFetch). Veja os primeiros resultados da busca para a keyword e cubra o que eles cobrem, com algo a mais: um número, um passo, uma tabela.
 6. Escreva o artigo em `src/content/blog/<slug>.md`.
-7. Escolha e baixe a capa.
+7. Escolha e baixe a capa. Bia: recorte e insira os prints das telas explicadas (seção "Prints das telas").
 8. Passe o texto inteiro pelo `humanizer`, com o processo completo da seção "Humanizar". É sempre a última etapa de escrita.
 9. Conte as palavras e rode `npm run build` até passar.
 10. Revise o checklist.
@@ -231,5 +252,6 @@ KEYWORD=<keyword principal>
 - [ ] Caio: 2 ou mais fontes conferidas, com link. Bia: só recursos que estão no ar
 - [ ] CTA final com UTM `utm_campaign=<slug>`
 - [ ] Capa sem copyright do `foto.sh`, no estilo do blog, com `capaAlt` e `capaCredito`
+- [ ] Bia: um print recortado e legível de cada tela explicada, com texto alternativo e legenda, e a ressalva da versão nova do app
 - [ ] O texto inteiro passou pelo `humanizer` (rascunho, lista do que ainda soa como IA, versão final), sem travessão e sem fato alterado
 - [ ] `npm run build` passa
