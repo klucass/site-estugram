@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Rotina do blog: roda todo dia às 9:00. Escreve artigo novo na segunda, quarta e sexta
+  e, em qualquer dia, publica o artigo agendado para hoje.
+  Se o Mac estiver dormindo no horário, o launchd roda assim que ele acordar;
+  o script não publica dois artigos no mesmo dia.
+  Instalar: scripts/rotina/instalar.sh
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>br.estugram.blog-artigo</string>
+  <key>WorkingDirectory</key>
+  <string>/Users/kennedy/projetos/estugram/site-estugram</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>scripts/rotina/publicar-artigo.sh</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/Users/kennedy/.nvm/versions/node/v24.22.1/bin:/Users/kennedy/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+  </dict>
+  <key>StartCalendarInterval</key>
+  <!-- Todo dia; o script decide se é dia de artigo novo -->
+  <dict>
+    <key>Hour</key>
+    <integer>9</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+  <key>StandardOutPath</key>
+  <string>/Users/kennedy/projetos/estugram/site-estugram/.rotina/rotina.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/kennedy/projetos/estugram/site-estugram/.rotina/rotina.log</string>
+</dict>
+</plist>

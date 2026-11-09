@@ -2,6 +2,7 @@
 titulo: "5 Dicas para ser mais produtivo nos estudos"
 descricao: "Quando você melhora a produtividade do estudo, você está mais apto a usar seu tempo sabiamente, administrar sua carga de trabalho com eficiência e concentrar-se no que é importante. Aqui estão algumas idéias sobre como melhorar sua produtividade como estudante"
 capa: ./capas/pexels-photo-3808057.webp
+autor: caio
 ---
 Quando você é um estudante, cada momento conta. Você tem tempo limitado para estudar, fazer seus deveres de casa e se preparar para os testes, por isso é importante tirar o máximo proveito de cada minuto. Produtividade é conseguir fazer mais em menos tempo. Trata-se de encontrar maneiras de ser mais eficiente para que você possa completar as tarefas mais rapidamente e com menos esforço. Quando você melhora a produtividade do estudo, você está mais apto a usar seu tempo sabiamente, administrar sua carga de trabalho com eficiência e concentrar-se no que é importante. Aqui estão algumas idéias sobre como melhorar sua produtividade como estudante:
 

@@ -2,6 +2,7 @@
 titulo: "Maximizando a produtividade nos estudos: como alcançar o estado de flow"
 descricao: "Neste artigo, exploraremos o que é o estado de fluxo e como você pode entrar nesse estado durante seus estudos para alcançar um alto rendimento"
 capa: ./capas/pexels-photo-4143800.jpeg
+autor: caio
 ---
 O estado de fluxo, ou “flow”, é um conceito psicológico que descreve um estado de concentração profunda e produtividade máxima. Quando você está no estado de fluxo, o tempo parece desaparecer, a criatividade flui e você atinge um nível excepcional de desempenho. No mundo dos estudos e da produtividade, alcançar o estado de fluxo é um objetivo desejado por muitos.Neste artigo, exploraremos o que é o estado de fluxo e como você pode entrar nesse estado durante seus estudos para alcançar um alto rendimento.
 

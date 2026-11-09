@@ -11,6 +11,8 @@
     "og": "sh og/gerar.sh"
   },
   "dependencies": {
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.4",
     "astro": "^7.4.0"
   },
   "devDependencies": {

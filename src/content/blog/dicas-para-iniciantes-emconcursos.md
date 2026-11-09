@@ -2,6 +2,7 @@
 titulo: "10 dicas para iniciantes no estudo pra concursos"
 descricao: "Aqui vão algumas dicas rápidas que vão te ajudar a inciar a jornada de estudo para concursos da forma certa"
 capa: ./capas/pexels-photo-9429448.jpeg
+autor: caio
 ---
 Estudar para concursos não é uma tarefa fácil, exige determinação, foco e muita organização. Com o planejamento certo e dedicação você atingirá seus objetivos. Aqui vão algumas dicas rápidas que vão te ajudar durante a jornada de estudo para concursos.
 

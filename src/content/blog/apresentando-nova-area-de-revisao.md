@@ -2,6 +2,7 @@
 titulo: "Apresentando nova área de revisão"
 descricao: "Desenvolvemos essa nova área com o objetivo de otimizar ainda mais seu tempo de estudo, proporcionando insights valiosos sobre seu desempenho e ajudando-o a focar nos pontos que precisam de mais atenção."
 capa: ./capas/area-revisao.webp
+autor: bia
 ---
 É com grande entusiasmo que anunciamos a mais recente atualização do estugram – a funcionalidade de Revisões!
 

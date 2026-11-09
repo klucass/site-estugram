@@ -2,6 +2,7 @@
 titulo: "A importância do descanso para um estudo de alta produtividade"
 descricao: "Estudar por longas horas pode até parecer o caminho para o sucesso, mas a verdade é que o cérebro humano não é uma máquina incansável. Ele precisa de momentos de pausa"
 capa: ./capas/descanso.jpeg
+autor: caio
 ---
 Vida de estudante, onde cada minuto conta e a pressão é quase palpável. Parece que estamos em uma eterna corrida contra o relógio, não é mesmo? Mas, e se eu te dissesse que uma das chaves para o sucesso nos estudos não é apenas estudar mais, mas também descansar melhor? Isso mesmo, a fórmula mágica inclui uma boa dose de descanso. Vamos explorar por que descansar é preciso e como isso pode elevar a sua produtividade.
 

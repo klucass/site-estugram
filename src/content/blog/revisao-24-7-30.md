@@ -2,6 +2,7 @@
 titulo: "Conheça o método de revisão 24/7/30"
 descricao: "Para ajudar no processo de memorização dos estudos, é necessário fazer revisões. Uma das técnicas mais famosas é o método 24/7/30"
 capa: ./capas/pexels-photo-1925536.webp
+autor: caio
 ---
 Em 1885 um cientista chamado Hermann Ebbinghaus publicou um estudo inédito sobre como nosso cérebro esquece ao longo do tempo informações que foram aprendidas.
 

@@ -9,6 +9,7 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import PostCard from '../../components/PostCard.astro';
 import { getPosts, formatarData, minutosDeLeitura, type Post } from '../../lib/blog';
+import { autores, iniciais } from '../../lib/autores';
 import { signupUrl } from '../../config';
 
 export const getStaticPaths = (async () => {
@@ -29,7 +30,11 @@ interface Props {
 }
 
 const { post, outros } = Astro.props;
-const { titulo, descricao, capa, capaAlt, data } = post.data;
+const { titulo, descricao, capa, capaAlt, capaCredito, data, atualizado } = post.data;
+const autor = autores[post.data.autor];
+const autorUrl = `/blog/autor/${post.data.autor}`;
+// Nome do banco de imagens no crédito, tirado do endereço da foto (pexels.com → Pexels).
+const capaFonte = capaCredito && new URL(capaCredito.url).hostname.replace(/^www\./, '').split('.')[0];
 const { Content } = await render(post);
 // Prévia de link em 1.91:1, de no máximo 1200x630. As capas menores que isso não são ampliadas,
 // então o recorte cabe dentro da original para o tamanho declarado no og:image bater com o arquivo.
@@ -51,7 +56,16 @@ const jsonLd = {
   description: descricao,
   image: new URL(previa.src, Astro.site).toString(),
   url: endereco.toString(),
+  mainEntityOfPage: endereco.toString(),
+  inLanguage: 'pt-BR',
   ...(data && { datePublished: data.toISOString() }),
+  ...((atualizado ?? data) && { dateModified: (atualizado ?? data)!.toISOString() }),
+  author: {
+    '@type': 'Person',
+    name: autor.nome,
+    description: autor.resumo,
+    url: new URL(autorUrl, Astro.site).toString(),
+  },
   publisher: { '@type': 'Organization', name: 'Estugram', url: Astro.site?.toString() },
 };
 ---
@@ -75,18 +89,42 @@ const jsonLd = {
         <h1>{titulo}</h1>
         <p class="linha-fina">{descricao}</p>
         <p class="meta">
+          <a class="assinatura" href={autorUrl}>
+            <span class="avatar" style={`--cor:${autor.cor}`} aria-hidden="true">{iniciais(autor.nome)}</span>
+            {autor.nome}
+          </a>
           {data && <time datetime={data.toISOString()}>{formatarData(data)}</time>}
+          {atualizado && <span>Atualizado em <time datetime={atualizado.toISOString()}>{formatarData(atualizado)}</time></span>}
           <span>{minutosDeLeitura(post)} min de leitura</span>
         </p>
       </header>
 
       <div class="wrap capa" data-reveal="scale" style="--d:1">
         <Image src={capa} alt={capaAlt} widths={[640, 1100, 1600]} sizes="(max-width: 1160px) 100vw, 1096px" loading="eager" fetchpriority="high" />
+        {
+          capaCredito && (
+            <p class="credito">
+              Foto: <a href={capaCredito.url} rel="nofollow noopener" target="_blank">{capaCredito.nome}</a>
+              {capaFonte && capaFonte !== capaCredito.nome.toLowerCase() && ` no ${capaFonte[0].toUpperCase()}${capaFonte.slice(1)}`}
+            </p>
+          )
+        }
       </div>
 
       <div class="wrap estreito texto">
         <Content />
       </div>
+
+      <footer class="wrap estreito">
+        <a class="autor card" href={autorUrl}>
+          <span class="avatar grande" style={`--cor:${autor.cor}`} aria-hidden="true">{iniciais(autor.nome)}</span>
+          <span>
+            <strong>{autor.nome}</strong>
+            <span class="papel">{autor.papel}</span>
+            <span class="resumo">{autor.resumo}</span>
+          </span>
+        </a>
+      </footer>
     </article>
 
     <aside class="wrap estreito" aria-label="Conheça o Estugram">
@@ -177,9 +215,81 @@ const jsonLd = {
   .meta {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 4px 16px;
     color: var(--muted);
     font-size: 15px;
+  }
+  .assinatura {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .assinatura:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .avatar {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--cor);
+    color: #0e1117;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+  }
+  .avatar.grande {
+    width: 56px;
+    height: 56px;
+    font-size: 19px;
+  }
+  .credito {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 13px;
+    text-align: right;
+  }
+  .credito a {
+    color: inherit;
+  }
+  .autor {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-top: clamp(40px, 6vw, 56px);
+    padding: 22px 24px;
+    border: 1px solid var(--line-2);
+    color: var(--muted-2);
+    text-decoration: none;
+  }
+  .autor > span:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .autor strong {
+    color: var(--text);
+    font-size: 18px;
+  }
+  .autor .papel {
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .autor .resumo {
+    margin-top: 6px;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .autor:hover strong {
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   .capa img {
@@ -214,6 +324,9 @@ const jsonLd = {
     line-height: 1.2;
     margin-top: 2em;
     margin-bottom: -0.2em;
+    /* O balance do global.css divide o título ao meio e deixa metade da coluna vazia.
+       No corpo do artigo, a linha vai até o fim e só evita uma palavra sozinha embaixo. */
+    text-wrap: pretty;
   }
   .texto :global(h2) {
     font-size: clamp(26px, 3vw, 32px);

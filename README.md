@@ -50,9 +50,14 @@ Para publicar um artigo, crie `src/content/blog/nome-do-artigo.md`. O nome do ar
 ---
 titulo: "Como montar um ciclo de estudos"
 descricao: "Resumo de uma ou duas frases. Aparece na lista e na prévia do link."
+autor: caio # ou bia, veja src/lib/autores.ts
 capa: ./capas/ciclo.webp
 capaAlt: "" # descreva a foto se ela mostrar algo importante
-data: 2026-10-22
+capaCredito: # opcional, aparece abaixo da capa
+  nome: "Fotógrafo"
+  url: "https://stocksnap.io/photo/..."
+data: 2026-10-22 # data futura agenda o artigo: ele só aparece no build desse dia
+atualizado: 2026-11-20 # opcional, quando o artigo for revisado
 rascunho: true # some do site publicado, mas aparece no npm run dev
 ---
 
@@ -60,6 +65,32 @@ Texto em Markdown. Use ### para os intertítulos.
 ```
 
 A capa é otimizada no build (vários tamanhos em WebP), e a prévia de 1200×630 é gerada a partir dela. A lista mostra os mais novos primeiro. Artigos sem `data` vão para o fim, em ordem alfabética. O número de artigos por página fica em `postsPorPagina`, em `config.ts`.
+
+### Autores
+
+Os artigos são assinados por duas personas da equipe, definidas em `src/lib/autores.ts`. Caio Ferraz escreve sobre ciência do estudo. Bia Nunes, do sucesso do aluno, escreve sobre novidades e uso do app. Cada uma tem uma página em `/blog/autor/<id>`, que diz que é uma persona. O artigo mostra a assinatura no topo, um cartão do autor no fim e o autor no JSON-LD.
+
+### Busca e assistentes de IA
+
+- `/sitemap-index.xml`, gerado pelo `@astrojs/sitemap` e apontado no `robots.txt`.
+- `/rss.xml` com todos os artigos.
+- `/llms.txt`, um resumo do site e a lista de artigos em Markdown para assistentes de IA.
+- JSON-LD `BlogPosting` com autor, `datePublished` e `dateModified`, e `ProfilePage` nas páginas de autor.
+
+### Rotina de publicação
+
+Três artigos por semana saem sozinhos, segunda, quarta e sexta às 9h, pelo launchd do Mac. Nenhum servidor fica ligado: o script chama o Claude Code em modo headless, confere o resultado e faz o push no `master`, e o Netlify publica.
+
+- `.claude/skills/artigo-blog/`: a skill com as regras de SEO e de escrita (`SKILL.md`), a voz das personas (`personas.md`) e as filas de pauta de cada autor (`pautas.md`). Ela usa a skill `humanizer`, copiada em `.claude/skills/humanizer/`.
+- `scripts/rotina/publicar-artigo.sh`: escolhe o autor do dia (dois do Caio para um da Bia, pela tabela "Já publicados"), chama o Claude, confere que saiu exatamente um artigo com capa, data e autor certos, roda o build, marca a pauta e faz o commit e o push. Avisa o resultado com uma notificação do macOS.
+- `scripts/rotina/foto.sh`: busca e baixa a capa, só com fotos sem copyright. Usa o Openverse, filtrado para CC0 e domínio público (só StockSnap e Rawpixel, com cerca de 1000 px), sem chave. Se houver `PIXABAY_API_KEY` em `.rotina/env`, busca também no Pixabay (1280 px). O Pexels fechou a API para chaves novas, e a API do Unsplash exige carregar a foto do servidor deles, o que não funciona com as capas otimizadas no build.
+- `.rotina/` (fora do git): `env` com chaves opcionais, `rotina.log`, a última resposta do Claude e as miniaturas das fotos.
+
+Instalar: rode `scripts/rotina/instalar.sh`. Para rodar na hora: `launchctl kickstart gui/$(id -u)/br.estugram.blog-artigo`. Para escrever um artigo na mão, peça ao Claude Code na pasta do projeto usando a skill `artigo-blog`.
+
+Se o Mac estiver dormindo no horário, o artigo sai quando ele acordar. O script nunca publica dois artigos no mesmo dia.
+
+**Artigo agendado.** Um artigo com `data` futura fica fora do site publicado (o filtro está em `src/lib/blog.ts`, no horário de Brasília) e aparece no `npm run dev`. O launchd roda o script todo dia às 9h: na segunda, quarta e sexta ele escreve o artigo novo, e em qualquer dia em que houver um artigo com a data de hoje ele dispara um build novo no Netlify para o artigo aparecer. O build é disparado pelo `NETLIFY_BUILD_HOOK` de `.rotina/env`, se houver (crie em Netlify > Site configuration > Build & deploy > Build hooks). Sem ele, o script faz um commit vazio no `master`. Num dia de rotina com artigo agendado, a rotina não escreve outro.
 
 ## Antes de publicar
 

@@ -2,6 +2,7 @@
 titulo: "Como monitorar o desempenho nos estudos"
 descricao: "Como saber se estou no caminho certo? Como saber se estou estudando o suficiente? Bem, alguns indicadores nos ajudam a acompanhar nosso desempenho nos estudos e, se necessário, a corrigir as rotas"
 capa: ./capas/pexels-photo-1684149.webp
+autor: caio
 ---
 > “Se você não sabe pra onde vai, qualquer caminho serve” – Gato Cheshire (Alice no País das Maravilhas, Lewis Carroll)
 

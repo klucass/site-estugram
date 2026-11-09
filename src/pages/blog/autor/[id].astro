@@ -1,0 +1,157 @@
+---
+// Página de quem assina os artigos: quem é, o que escreve e todos os artigos dela.
+import type { GetStaticPaths } from 'astro';
+import Base from '../../../layouts/Base.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import PostCard from '../../../components/PostCard.astro';
+import { getPosts } from '../../../lib/blog';
+import { autores, autorIds, iniciais, type AutorId } from '../../../lib/autores';
+
+export const getStaticPaths = (async () => {
+  const posts = await getPosts();
+  return autorIds.map((id) => ({
+    params: { id },
+    props: { id, posts: posts.filter((p) => p.data.autor === id) },
+  }));
+}) satisfies GetStaticPaths;
+
+const { id, posts } = Astro.props as { id: AutorId; posts: Awaited<ReturnType<typeof getPosts>> };
+const autor = autores[id];
+const endereco = new URL(Astro.url.pathname, Astro.site).toString();
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  url: endereco,
+  mainEntity: {
+    '@type': 'Person',
+    name: autor.nome,
+    description: autor.resumo,
+    jobTitle: autor.papel,
+    url: endereco,
+    worksFor: { '@type': 'Organization', name: 'Estugram', url: Astro.site?.toString() },
+  },
+};
+---
+
+<Base title={`${autor.nome} · Blog do Estugram`} description={autor.resumo}>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <Header />
+
+  <main id="conteudo" class="pagina">
+    <div class="brilho" aria-hidden="true"></div>
+    <div class="wrap">
+      <header class="cabeca" data-reveal>
+        <a class="voltar" href="/blog"><span aria-hidden="true">←</span> Blog</a>
+        <span class="avatar" style={`--cor:${autor.cor}`} aria-hidden="true">{iniciais(autor.nome)}</span>
+        <h1>{autor.nome}</h1>
+        <span class="eyebrow">{autor.papel}</span>
+        {autor.sobre.map((p) => <p>{p}</p>)}
+        <p class="nota">{autor.nome} é uma persona da equipe do Estugram, que assina os textos sobre este tema.</p>
+      </header>
+
+      <h2>Artigos</h2>
+      <ul class="grade">
+        {
+          posts.map((post, i) => (
+            <li data-reveal style={`--d:${Math.min(i, 5)}`}>
+              <PostCard post={post} prioridade={i === 0} />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </main>
+
+  <Footer />
+</Base>
+
+<style>
+  .pagina {
+    position: relative;
+    isolation: isolate;
+    overflow-x: clip;
+    padding: clamp(40px, 6vw, 80px) 0 clamp(72px, 10vw, 128px);
+  }
+  .brilho {
+    position: absolute;
+    z-index: -1;
+    left: 50%;
+    top: -260px;
+    width: min(1100px, 150vw);
+    height: 600px;
+    translate: -50% 0;
+    background: radial-gradient(closest-side, rgb(91 140 255 / 0.16), transparent);
+    pointer-events: none;
+  }
+  .cabeca {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    max-width: 760px;
+    margin-bottom: clamp(48px, 7vw, 80px);
+  }
+  .cabeca p {
+    color: var(--muted-2);
+    font-size: clamp(17px, 1.6vw, 19px);
+  }
+  .cabeca .nota {
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .voltar {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .voltar:hover {
+    color: var(--text);
+  }
+  .avatar {
+    display: grid;
+    place-items: center;
+    width: 88px;
+    height: 88px;
+    margin-top: 8px;
+    border-radius: 50%;
+    background: var(--cor);
+    color: #0e1117;
+    font-size: 30px;
+    font-weight: 800;
+  }
+  h1 {
+    font-size: clamp(38px, 6vw, 64px);
+    letter-spacing: -0.03em;
+  }
+  h2 {
+    font-size: clamp(28px, 3.6vw, 40px);
+    margin-bottom: clamp(24px, 3vw, 36px);
+  }
+  .grade {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(16px, 2.4vw, 28px);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .grade > li {
+    display: flex;
+  }
+  .grade > li > :global(*) {
+    flex: 1;
+  }
+  @media (max-width: 1000px) {
+    .grade {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 640px) {
+    .grade {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

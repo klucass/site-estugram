@@ -2,6 +2,7 @@
 titulo: "3 Dicas para tirar o máximo proveito do estugram em seus estudos"
 descricao: "Nossa missão é ajudar você a estudar melhor, através de nossa ferramenta que te ajuda a focar nos estudos. Gostaria de apresentar a você 3 utilidades de nossa ferramenta que vão te ajudar a estudar melhor e com mais produtividade."
 capa: ./capas/woman-hand-desk-office.webp
+autor: bia
 ---
 Estudar em alto nível para provas e concursos não é das tarefas mais fáceis não é mesmo?
 
