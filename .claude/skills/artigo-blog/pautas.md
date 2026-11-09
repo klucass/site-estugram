@@ -26,6 +26,7 @@ A rotina escolhe o autor por esta tabela: se as duas últimas linhas são do `ca
 | `como-tirar-o-maximo-proveito-do-estugram-para-seus-estudos` | bia | como usar o Estugram | — |
 | `como-memorizar-o-que-estudo` | caio | como memorizar o que estudo | 2026-11-08 |
 | `repeticao-espacada` | caio | repetição espaçada | 2026-11-10 |
+| `como-registrar-horas-de-estudo` | bia | como registrar horas de estudo | 2026-11-09 |
 
 ---
 
@@ -60,7 +61,7 @@ A rotina escolhe o autor por esta tabela: se as duas últimas linhas são do `ca
 
 | # | Keyword principal | Público | Ângulo | Status |
 |---|---|---|---|---|
-| 101 | como registrar horas de estudo | ambos | Timer por matéria e assunto, e lançar depois no Histórico a sessão esquecida. Por que medir horas líquidas | pendente |
+| 101 | como registrar horas de estudo | ambos | Timer por matéria e assunto, e lançar depois no Histórico a sessão esquecida. Por que medir horas líquidas | usada 2026-11-09 |
 | 102 | como organizar revisões | ambos | As revisões de 24 horas, 7 e 30 dias montadas sozinhas, as sugeridas e como não deixar acumular | pendente |
 | 103 | estudar com amigos online | ambos | Desafios do Estugram: check-in com foto, feed, cafezinho e ranking. Conferir se está aberto para todos ou por convite | pendente |
 | 104 | histórico de estudos | ambos | Calendário do mês com tempo e matérias por dia: como usar para ajustar a semana | pendente |
