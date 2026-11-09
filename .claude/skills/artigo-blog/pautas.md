@@ -20,7 +20,7 @@ A rotina escolhe o autor por esta tabela: se as duas últimas linhas são do `ca
 | `como-monitorar-o-desempenho-nos-estudos` | caio | como monitorar desempenho nos estudos | — |
 | `revisao-24-7-30` | caio | método de revisão 24/7/30 | — |
 | `estado-de-flow-nos-estudos` | caio | estado de flow nos estudos | — |
-| `ciclo-de-estudos` | caio | ciclo de estudos | — |
+| `ciclo-de-estudos` | bia | ciclo de estudos | — |
 | `nova-plataforma` | bia | nova plataforma Estugram | — |
 | `apresentando-nova-area-de-revisao` | bia | área de revisão do Estugram | — |
 | `como-tirar-o-maximo-proveito-do-estugram-para-seus-estudos` | bia | como usar o Estugram | — |
