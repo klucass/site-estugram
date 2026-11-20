@@ -28,6 +28,7 @@ A rotina escolhe o autor por esta tabela: se as duas últimas linhas são do `ca
 | `repeticao-espacada` | caio | repetição espaçada | 2026-11-10 |
 | `como-registrar-horas-de-estudo` | bia | como registrar horas de estudo | 2026-11-09 |
 | `quantas-horas-estudar-por-dia-concurso` | caio | quantas horas estudar por dia para concurso | 2026-11-18 |
+| `grifar-o-texto-funciona` | caio | grifar o texto funciona | 2026-11-20 |
 
 ---
 
@@ -38,7 +39,7 @@ A rotina escolhe o autor por esta tabela: se as duas últimas linhas são do `ca
 | 1 | como memorizar o que estudo | ambos | Prática de recuperação (Roediger e Karpicke, 2006): fechar o livro e tentar lembrar rende mais que reler. Como fazer com questões, flashcards e folha em branco | usada 2026-11-08 |
 | 2 | repetição espaçada | ambos | O que é o efeito de espaçamento, quanto espaçar (Cepeda et al., 2008) e como montar o calendário. Linkar `revisao-24-7-30` sem repetir o artigo | usada 2026-11-10 |
 | 3 | quantas horas estudar por dia para concurso | concurso | Por que horas líquidas importam mais que horas sentado, o limite da atenção e como medir. Faixas realistas para quem trabalha | usada 2026-11-18 |
-| 4 | grifar o texto funciona | ambos | Dunlosky et al. (2013) classificou grifar como de baixa utilidade. Quando ajuda, quando atrapalha e o que fazer no lugar | pendente |
+| 4 | grifar o texto funciona | ambos | Dunlosky et al. (2013) classificou grifar como de baixa utilidade. Quando ajuda, quando atrapalha e o que fazer no lugar | usada 2026-11-20 |
 | 5 | estudar com música ajuda ou atrapalha | ambos | O que as pesquisas dizem (música com letra, efeito do humor, tarefa de leitura x de cálculo). Sem "efeito Mozart" | pendente |
 | 6 | estudo intercalado | ambos | Intercalar tipos de problema (Rohrer e Taylor) contra estudar em blocos. Por que parece pior e funciona melhor. Linkar `ciclo-de-estudos` | pendente |
 | 7 | dormir depois de estudar ajuda a memorizar | ambos | Sono e consolidação da memória, o custo de virar a noite antes da prova, cochilo | pendente |
