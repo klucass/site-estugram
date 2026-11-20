@@ -15,7 +15,10 @@ import {
 } from "../config";
 
 // Título do herói, palavra por palavra, para a entrada em sequência.
-const titulo = "Mantenha a motivação em alta estudando com os amigos.".split(" ");
+const titulo =
+  "Estude com os amigos ao vivo, dispute o ranking e veja sua evolução.".split(
+    " ",
+  );
 
 // Nomes de exemplo para a faixa que corre abaixo do herói.
 const exemplos = [
@@ -197,6 +200,10 @@ const perguntas = [
     r: "Cada desafio tem a sua sala, e só quem participa entra. Você senta numa mesa e o timer começa; levantou, ele pausa. Enquanto isso, vê quem mais está estudando e pode conversar com o grupo. No fim, você registra a sessão e faz o check-in normalmente.",
   },
   {
+    p: "Dá para fazer chamada em grupo na sala?",
+    r: "Sim. Dentro da sala do desafio, você abre uma chamada com os participantes para tirar dúvidas, revisar junto ou conversar no intervalo. Quando a chamada termina, todo mundo continua estudando na sala.",
+  },
+  {
     p: "E se eu ficar um dia sem estudar?",
     r: "Tudo bem, isso acontece com todo mundo. Volte quando puder e continue registrando. O grupo também ajuda a retomar a rotina.",
   },
@@ -223,43 +230,45 @@ const seta = "→";
     <!-- Herói -->
     <section class="hero">
       <div class="aurora" aria-hidden="true">
-        <i class="a1"></i><i class="a2"></i><i class="a3"></i>
+        <i class="a1"></i>
+        <i class="a2"></i>
+        <i class="a3"></i>
       </div>
       <div class="grade" aria-hidden="true"></div>
 
       <div class="wrap">
         <div class="hero-copy">
-          <a class="selo entra" href="#sala" style="--t:0.05s">
+          <a class="selo entra" href="#chamadas" style="--t:0.05s">
             <span class="novo">Novo</span>
-            Sala de estudo virtual com os amigos
-            <span class="seta" aria-hidden="true">{seta}</span>
+            Chamadas em grupo na sala de estudo
+            <span class="seta" aria-hidden="true">
+              {seta}
+            </span>
           </a>
           <h1>
-            {
-              titulo.map((w, i) => (
-                <>
-                  <span class="w">
-                    <span style={`--i:${i}`}>{w}</span>
-                  </span>{" "}
-                </>
-              ))
-            }
+            {titulo.map((w, i) => (
+              <>
+                <span class="w">
+                  <span style={`--i:${i}`}>{w}</span>
+                </span>{" "}
+              </>
+            ))}
           </h1>
           <p class="lead entra" style="--t:0.75s">
-            Quem estuda passa a maior parte do tempo sozinho, e fica fácil
-            largar a rotina. No Estugram você cria um desafio com os amigos que
-            também estão estudando, senta com eles na sala de estudo virtual e
-            vê no ranking quem já estudou hoje.
+            Crie um desafio com os amigos que também estão estudando, sente com
+            eles na sala de estudo virtual e veja no ranking quem já estudou
+            hoje.
           </p>
           <div class="hero-ctas entra" style="--t:0.9s">
-            <a class="btn btn-primary" href={signupUrl("hero")}
-              >Criar um desafio grátis <span class="seta" aria-hidden="true"
-                >{seta}</span
-              ></a
-            >
-            <a class="btn btn-ghost" href={signupUrl("hero-codigo")}
-              >Tenho um código</a
-            >
+            <a class="btn btn-primary" href={signupUrl("hero")}>
+              Entrar agora{" "}
+              <span class="seta" aria-hidden="true">
+                {seta}
+              </span>
+            </a>
+            <a class="btn btn-ghost" href={signupUrl("hero-codigo")}>
+              Tenho um código
+            </a>
           </div>
           <p class="fine entra" style="--t:1s">
             Participar é grátis. Funciona no celular e no computador.
@@ -292,26 +301,36 @@ const seta = "→";
               <span class="avatar sm" style="background:#3F6E5A"></span>
               <span class="avatar sm" style="background:#8A5A44"></span>
             </span>
-            <span
-              ><b class="tnum" data-count="11">11</b><b> de 18</b> já fizeram check-in
-              hoje</span
-            >
+            <span>
+              <b class="tnum" data-count="11">
+                11
+              </b>
+              <b> de 18</b> já fizeram check-in hoje
+            </span>
           </div>
 
           <div class="avisos" aria-hidden="true">
             <div class="aviso">
-              <span class="ic rosa"
-                ><Cafe size={16} filled style="color:#FF4D8A" /></span
-              >
-              <span><b>Rafael</b> mandou um cafezinho no seu check-in</span>
+              <span class="ic rosa">
+                <Cafe size={16} filled style="color:#FF4D8A" />
+              </span>
+              <span>
+                <b>Rafael</b> mandou um cafezinho no seu check-in
+              </span>
             </div>
             <div class="aviso">
-              <span class="avatar sm" style="background:#6A4C93">AS</span>
-              <span><b>Ana</b> sentou para estudar na sala</span>
+              <span class="avatar sm" style="background:#6A4C93">
+                AS
+              </span>
+              <span>
+                <b>Ana</b> sentou para estudar na sala
+              </span>
             </div>
             <div class="aviso">
               <span class="ic azul">6º</span>
-              <span>Faltam <b>9h 15m</b> para o 5º lugar</span>
+              <span>
+                Faltam <b>9h 15m</b> para o 5º lugar
+              </span>
             </div>
           </div>
         </div>
@@ -325,18 +344,16 @@ const seta = "→";
         estudos
       </p>
       <div class="faixa-trilho">
-        {
-          [0, 1].map((copia) => (
-            <ul aria-hidden={copia === 1 ? "true" : undefined}>
-              {exemplos.map((e) => (
-                <li>
-                  <i style={`background:${e.cor}`} />
-                  {e.nome}
-                </li>
-              ))}
-            </ul>
-          ))
-        }
+        {[0, 1].map((copia) => (
+          <ul aria-hidden={copia === 1 ? "true" : undefined}>
+            {exemplos.map((e) => (
+              <li>
+                <i style={`background:${e.cor}`} />
+                {e.nome}
+              </li>
+            ))}
+          </ul>
+        ))}
       </div>
     </section>
 
@@ -354,40 +371,33 @@ const seta = "→";
 
         <div class="historia" data-historia>
           <ol class="passos">
-            {
-              passos.map((p, i) => (
-                <li class:list={["passo", { ativo: i === 0 }]}>
-                  <span class="num tnum">{String(i + 1).padStart(2, "0")}</span>
-                  <h3>{p.titulo}</h3>
-                  <p>{p.texto}</p>
-                  {i === 0 && (
-                    <span class="codigo">
-                      Código do desafio <b class="tnum">ZERA-4821</b>
-                    </span>
-                  )}
-                  <Tela
-                    class="passo-tela"
-                    nome={p.tela}
-                    tipo="celular"
-                    alt={p.alt}
-                  />
-                </li>
-              ))
-            }
+            {passos.map((p, i) => (
+              <li class:list={["passo", { ativo: i === 0 }]}>
+                <span class="num tnum">{String(i + 1).padStart(2, "0")}</span>
+                <h3>{p.titulo}</h3>
+                <p>{p.texto}</p>
+                {i === 0 && (
+                  <span class="codigo">
+                    Código do desafio <b class="tnum">ZERA-4821</b>
+                  </span>
+                )}
+                <Tela
+                  class="passo-tela"
+                  nome={p.tela}
+                  tipo="celular"
+                  alt={p.alt}
+                />
+              </li>
+            ))}
           </ol>
 
           <div class="cenario">
             <div class="cenas">
-              {
-                passos.map((p, i) => (
-                  <div
-                    class:list={["cena", { ativa: i === 0 }]}
-                    style={p.foco}
-                  >
-                    <Tela nome={p.tela} tipo="web" alt={p.alt} />
-                  </div>
-                ))
-              }
+              {passos.map((p, i) => (
+                <div class:list={["cena", { ativa: i === 0 }]} style={p.foco}>
+                  <Tela nome={p.tela} tipo="web" alt={p.alt} />
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -417,15 +427,43 @@ const seta = "→";
         </div>
 
         <ul class="sala-pontos">
-          {
-            sala.map((s, i) => (
-              <li class="card spot" data-reveal style={`--d:${i}`}>
-                <h3>{s.titulo}</h3>
-                <p>{s.texto}</p>
-              </li>
-            ))
-          }
+          {sala.map((s, i) => (
+            <li class="card spot" data-reveal style={`--d:${i}`}>
+              <h3>{s.titulo}</h3>
+              <p>{s.texto}</p>
+            </li>
+          ))}
         </ul>
+
+        <div class="chamadas card" id="chamadas" data-reveal>
+          <div class="chamadas-icone" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              width="28"
+              height="28"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+          </div>
+          <div class="chamadas-texto">
+            <span class="novo">Novo</span>
+            <h3>Chamadas em grupo com quem está na sala</h3>
+            <p>
+              Abra uma chamada com os participantes do desafio sem sair da sala.
+              Dá para tirar uma dúvida, revisar a matéria juntos ou só conversar
+              no intervalo do pomodoro, e voltar a estudar quando a chamada
+              acabar.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -449,7 +487,9 @@ const seta = "→";
                 <span class="avatar sm" style="background:#3F6E5A"></span>
                 <span class="avatar sm" style="background:#8A5A44"></span>
               </span>
-              <span><b>11 de 18</b> já fizeram check-in hoje</span>
+              <span>
+                <b>11 de 18</b> já fizeram check-in hoje
+              </span>
               <span class="ao-vivo" aria-hidden="true"></span>
             </div>
             <CheckinCard
@@ -477,7 +517,12 @@ const seta = "→";
             <div class="streak card" data-reveal style="--d:3">
               <Cafe size={30} filled fumaca style="color:#FF4D8A" />
               <div>
-                <b><span class="tnum" data-count="11">11</span> dias seguidos</b>
+                <b>
+                  <span class="tnum" data-count="11">
+                    11
+                  </span>{" "}
+                  dias seguidos
+                </b>
                 <small>Sua sequência de check-ins</small>
               </div>
             </div>
@@ -485,9 +530,9 @@ const seta = "→";
         </div>
 
         <div class="interacao card spot" data-reveal>
-          <span class="interacao-ic" aria-hidden="true"
-            ><Cafe size={26} filled style="color:#FF4D8A" /></span
-          >
+          <span class="interacao-ic" aria-hidden="true">
+            <Cafe size={26} filled style="color:#FF4D8A" />
+          </span>
           <div>
             <h3>Apoiar os amigos também conta ponto</h3>
             <p>
@@ -513,42 +558,36 @@ const seta = "→";
           </p>
         </div>
         <div class="criterios">
-          {
-            criterios.map((c, i) => (
-              <div class="crit card spot" data-reveal style={`--d:${i}`}>
-                <span class:list={["tag", { pro: c.tag === "Pro" }]}>
-                  {c.tag}
-                </span>
-                <div class:list={["vis", `vis-${c.visual}`]} aria-hidden="true">
-                  {c.visual === "dias" &&
-                    [1, 1, 1, 1, 1, 0, 0].map((f, j) => (
-                      <i class={f ? "f" : ""} style={`--j:${j}`} />
-                    ))}
-                  {c.visual === "horas" &&
-                    [42, 70, 30, 88, 56, 100, 64].map((h, j) => (
-                      <i style={`--h:${h}%;--j:${j}`} />
-                    ))}
-                  {c.visual === "questoes" &&
-                    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((j) => (
-                      <i class={j < 7 ? "f" : ""} style={`--j:${j}`} />
-                    ))}
-                  {c.visual === "acerto" && <i class="anel" />}
-                </div>
-                <p class="metrica">
-                  <b
-                    class="tnum"
-                    data-count={c.count}
-                    data-format={c.formato}
-                  >
-                    {c.valor}
-                  </b>
-                  {c.unidade && <span>{c.unidade}</span>}
-                </p>
-                <h3>{c.titulo}</h3>
-                <p>{c.texto}</p>
+          {criterios.map((c, i) => (
+            <div class="crit card spot" data-reveal style={`--d:${i}`}>
+              <span class:list={["tag", { pro: c.tag === "Pro" }]}>
+                {c.tag}
+              </span>
+              <div class:list={["vis", `vis-${c.visual}`]} aria-hidden="true">
+                {c.visual === "dias" &&
+                  [1, 1, 1, 1, 1, 0, 0].map((f, j) => (
+                    <i class={f ? "f" : ""} style={`--j:${j}`} />
+                  ))}
+                {c.visual === "horas" &&
+                  [42, 70, 30, 88, 56, 100, 64].map((h, j) => (
+                    <i style={`--h:${h}%;--j:${j}`} />
+                  ))}
+                {c.visual === "questoes" &&
+                  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((j) => (
+                    <i class={j < 7 ? "f" : ""} style={`--j:${j}`} />
+                  ))}
+                {c.visual === "acerto" && <i class="anel" />}
               </div>
-            ))
-          }
+              <p class="metrica">
+                <b class="tnum" data-count={c.count} data-format={c.formato}>
+                  {c.valor}
+                </b>
+                {c.unidade && <span>{c.unidade}</span>}
+              </p>
+              <h3>{c.titulo}</h3>
+              <p>{c.texto}</p>
+            </div>
+          ))}
         </div>
         <p class="ilustrativo">Números ilustrativos.</p>
       </div>
@@ -569,56 +608,51 @@ const seta = "→";
 
         <div class="vitrine" data-vitrine data-reveal="scale">
           <div class="abas" role="tablist" aria-label="Ferramentas do app">
-            {
-              ferramentas.map((f, i) => (
-                <button
-                  type="button"
-                  role="tab"
-                  class="aba"
-                  id={`aba-${f.tela}`}
-                  aria-controls={`painel-${f.tela}`}
-                  aria-selected={i === 0 ? "true" : "false"}
-                  tabindex={i === 0 ? 0 : -1}
-                >
-                  <span class="aba-topo">
-                    <span class="aba-nome">{f.nome}</span>
-                    {f.pro && <span class="pro">Pro</span>}
+            {ferramentas.map((f, i) => (
+              <button
+                type="button"
+                role="tab"
+                class="aba"
+                id={`aba-${f.tela}`}
+                aria-controls={`painel-${f.tela}`}
+                aria-selected={i === 0 ? "true" : "false"}
+                tabindex={i === 0 ? 0 : -1}
+              >
+                <span class="aba-topo">
+                  <span class="aba-nome">{f.nome}</span>
+                  {f.pro && <span class="pro">Pro</span>}
+                </span>
+                <span class="aba-corpo">
+                  <span>
+                    <b>{f.titulo}</b>
+                    {f.texto}
                   </span>
-                  <span class="aba-corpo">
-                    <span>
-                      <b>{f.titulo}</b>
-                      {f.texto}
-                    </span>
-                  </span>
-                  <span class="aba-tempo" aria-hidden="true">
-                    <i />
-                  </span>
-                </button>
-              ))
-            }
+                </span>
+                <span class="aba-tempo" aria-hidden="true">
+                  <i />
+                </span>
+              </button>
+            ))}
           </div>
           <div class="paineis">
-            {
-              ferramentas.map((f, i) => (
-                <div
-                  role="tabpanel"
-                  class:list={["painel", { ativo: i === 0 }]}
-                  id={`painel-${f.tela}`}
-                  aria-labelledby={`aba-${f.tela}`}
-                  inert={i !== 0}
-                >
-                  <Tela nome={f.tela} tipo="auto" alt={f.alt} />
-                </div>
-              ))
-            }
+            {ferramentas.map((f, i) => (
+              <div
+                role="tabpanel"
+                class:list={["painel", { ativo: i === 0 }]}
+                id={`painel-${f.tela}`}
+                aria-labelledby={`aba-${f.tela}`}
+                inert={i !== 0}
+              >
+                <Tela nome={f.tela} tipo="auto" alt={f.alt} />
+              </div>
+            ))}
           </div>
         </div>
       </div>
     </section>
 
     <!-- Planos (escondidos enquanto mostrarPlanos for false, em config.ts) -->
-    {
-      mostrarPlanos && (
+    {mostrarPlanos && (
       <section class="section alt" id="planos">
         <div class="wrap">
           <div class="section-head centro" data-reveal>
@@ -633,26 +667,31 @@ const seta = "→";
           <div class="planos">
             <div class="plano card spot" data-reveal style="--d:0">
               <h3>Grátis</h3>
-              <p class="preco"><b>R$ 0</b></p>
+              <p class="preco">
+                <b>R$ 0</b>
+              </p>
               <p class="sub">Para estudar com os amigos</p>
               <ul>
                 <li>Entre em quantos desafios quiser</li>
                 <li>Check-in com foto ou sessão do timer</li>
                 <li>Feed, comentários e ranking</li>
                 <li>
-                  Crie desafios de até {planos.gratis.maxParticipantes} pessoas, pontuando
-                  por dias
+                  Crie desafios de até {planos.gratis.maxParticipantes} pessoas,
+                  pontuando por dias
                 </li>
               </ul>
-              <a class="btn btn-ghost" href={signupUrl("plano-gratis")}
-                >Começar grátis</a
-              >
+              <a class="btn btn-ghost" href={signupUrl("plano-gratis")}>
+                Começar grátis
+              </a>
             </div>
 
             <div class="plano card destaque" data-reveal style="--d:1">
               <span class="tag">Para grupos maiores</span>
               <h3>Pro</h3>
-              <p class="preco"><b>R$ {planos.pro.anual}</b><span>/ano</span></p>
+              <p class="preco">
+                <b>R$ {planos.pro.anual}</b>
+                <span>/ano</span>
+              </p>
               <p class="sub">{planos.pro.testeDias} dias grátis para testar</p>
               <ul>
                 <li>Tudo do plano Grátis</li>
@@ -663,15 +702,19 @@ const seta = "→";
                 <li>Capa e regras próprias</li>
                 <li>Estatísticas, revisões, ciclo e pomodoro configurável</li>
               </ul>
-              <a class="btn btn-primary" href={signupUrl("plano-pro")}
-                >Testar o Pro <span class="seta" aria-hidden="true">{seta}</span
-                ></a
-              >
+              <a class="btn btn-primary" href={signupUrl("plano-pro")}>
+                Testar o Pro{" "}
+                <span class="seta" aria-hidden="true">
+                  {seta}
+                </span>
+              </a>
             </div>
 
             <div class="plano card spot" data-reveal style="--d:2">
               <h3>Turma</h3>
-              <p class="preco"><b>Piloto</b></p>
+              <p class="preco">
+                <b>Piloto</b>
+              </p>
               <p class="sub">Cobrado por aluno ativo</p>
               <ul>
                 <li>Painel da turma e relatórios</li>
@@ -679,13 +722,14 @@ const seta = "→";
                 <li>Desafios com a sua marca</li>
                 <li>Pro incluído para os alunos</li>
               </ul>
-              <a class="btn btn-ghost" href={pilotoUrl}>Falar com a gente</a>
+              <a class="btn btn-ghost" href={pilotoUrl}>
+                Falar com a gente
+              </a>
             </div>
           </div>
         </div>
       </section>
-      )
-    }
+    )}
 
     <!-- Perguntas -->
     <section class:list={["section", { alt: !mostrarPlanos }]} id="perguntas">
@@ -694,20 +738,17 @@ const seta = "→";
           <span class="eyebrow">Perguntas frequentes</span>
           <h2>Dúvidas antes de chamar os amigos?</h2>
           <p>
-            Se a sua não estiver aqui, escreva para <a
-              href={`mailto:${contatoEmail}`}>{contatoEmail}</a
-            >.
+            Se a sua não estiver aqui, escreva para{" "}
+            <a href={`mailto:${contatoEmail}`}>{contatoEmail}</a>.
           </p>
         </div>
         <div class="faq">
-          {
-            perguntas.map((q, i) => (
-              <details data-reveal style={`--d:${i % 4}`}>
-                <summary>{q.p}</summary>
-                <p>{q.r}</p>
-              </details>
-            ))
-          }
+          {perguntas.map((q, i) => (
+            <details data-reveal style={`--d:${i % 4}`}>
+              <summary>{q.p}</summary>
+              <p>{q.r}</p>
+            </details>
+          ))}
         </div>
       </div>
     </section>
@@ -716,22 +757,25 @@ const seta = "→";
     <section class="final">
       <div class="final-brilho" aria-hidden="true"></div>
       <div class="wrap final-in">
-        <span class="xicara" data-reveal
-          ><Cafe size={40} filled fumaca style="color:#FF4D8A" /></span
-        >
-        <h2 data-reveal="blur" style="--d:1">Quem vai estudar com você?</h2>
+        <span class="xicara" data-reveal>
+          <Cafe size={40} filled fumaca style="color:#FF4D8A" />
+        </span>
+        <h2 data-reveal="blur" style="--d:1">
+          Quem vai estudar com você?
+        </h2>
         <p data-reveal style="--d:2">
           Crie o desafio, mande o link no grupo e comece hoje mesmo.
         </p>
         <div class="hero-ctas" data-reveal style="--d:3">
-          <a class="btn btn-primary" href={signupUrl("final")}
-            >Criar um desafio grátis <span class="seta" aria-hidden="true"
-              >{seta}</span
-            ></a
-          >
-          <a class="btn btn-ghost" href={signupUrl("final-codigo")}
-            >Tenho um código</a
-          >
+          <a class="btn btn-primary" href={signupUrl("final")}>
+            Criar um desafio grátis{" "}
+            <span class="seta" aria-hidden="true">
+              {seta}
+            </span>
+          </a>
+          <a class="btn btn-ghost" href={signupUrl("final-codigo")}>
+            Tenho um código
+          </a>
         </div>
       </div>
     </section>
@@ -1047,8 +1091,7 @@ const seta = "→";
   .palco {
     width: 88%;
     transform-origin: 50% 0%;
-    transform: perspective(2200px)
-      rotateX(calc((1 - var(--p)) * 20deg))
+    transform: perspective(2200px) rotateX(calc((1 - var(--p)) * 20deg))
       scale(calc(0.93 + var(--p) * 0.07));
     will-change: transform;
   }
@@ -1484,6 +1527,54 @@ const seta = "→";
   .sala-pontos p {
     color: var(--muted-2);
     font-size: 15px;
+  }
+  .chamadas {
+    max-width: 1100px;
+    margin: 16px auto 0;
+    padding: 26px 28px;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    border: 1px solid color-mix(in srgb, var(--pink) 55%, var(--line));
+    background:
+      radial-gradient(
+        120% 140% at 0% 0%,
+        color-mix(in srgb, var(--pink) 16%, transparent),
+        transparent 60%
+      ),
+      var(--card, rgb(24 28 37));
+    scroll-margin-top: 96px;
+  }
+  .chamadas-icone {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 18px;
+    background: var(--pink);
+    color: var(--ink);
+  }
+  .chamadas .novo {
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+  .chamadas h3 {
+    font-size: 22px;
+    font-stretch: 115%;
+    margin-bottom: 6px;
+  }
+  .chamadas p {
+    color: var(--muted-2);
+    font-size: 16px;
+    max-width: 70ch;
+  }
+  @media (max-width: 560px) {
+    .chamadas {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 22px 20px;
+    }
   }
 
   /* ---------- Critérios ---------- */

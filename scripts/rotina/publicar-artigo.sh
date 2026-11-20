@@ -112,7 +112,7 @@ PROMPT="Use a skill artigo-blog para escrever o artigo de hoje ($HOJE), como se 
 Autor do dia: $AUTOR. Pegue a próxima pauta pendente da fila desse autor em $PAUTAS
 (para a bia, confira antes o log do app em ../appestugram, como a skill manda).
 Escreva o artigo em src/content/blog/<slug>.md com autor: $AUTOR e data: $HOJE, baixe a capa com
-scripts/rotina/foto.sh, (bia) recorte e insira os prints das telas que o artigo explica, como manda a seção "Prints das telas", passe o TEXTO INTEIRO pela skill humanizer com o processo completo da seção "Humanizar" da skill
+scripts/rotina/foto.sh, (bia) recorte e insira os prints das telas que o artigo explica, como manda a seção \"Prints das telas\", passe o TEXTO INTEIRO pela skill humanizer com o processo completo da seção \"Humanizar\" da skill
 (rascunho, lista do que ainda soa como IA, versão final, releitura do arquivo inteiro) e rode npm run build até passar.
 Siga o checklist da skill inteiro.
 NÃO edite $PAUTAS (você não tem permissão de escrita em .claude/): o script que te chamou marca a pauta.
