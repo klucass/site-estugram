@@ -1,11 +1,16 @@
 ---
-import { signupUrl, mostrarPlanos } from '../config';
+import { signupUrl, mostrarPlanos } from "../config";
 ---
 
 <header class="top">
   <div class="wrap bar">
     <a class="brand" href="/" aria-label="Estugram, início">
-      <img src="/estugram-logo-branca.png" width="528" height="92" alt="estugram" />
+      <img
+        src="/estugram-logo-branca.png"
+        width="528"
+        height="92"
+        alt="estugram"
+      />
     </a>
     <nav aria-label="Seções" class="links">
       <a href="/#como-funciona">Como funciona</a>
@@ -15,7 +20,9 @@ import { signupUrl, mostrarPlanos } from '../config';
       <a href="/#perguntas">Perguntas</a>
       <a href="/blog">Blog</a>
     </nav>
-    <a class="btn btn-primary cta" href={signupUrl('header')}>Criar desafio</a>
+    <a class="btn btn-primary cta" href={signupUrl("header")}>
+      Entrar agora
+    </a>
   </div>
 </header>
 
@@ -68,7 +75,7 @@ import { signupUrl, mostrarPlanos } from '../config';
     transition: color 0.3s ease;
   }
   .links a::after {
-    content: '';
+    content: "";
     position: absolute;
     left: 12px;
     right: 12px;
