@@ -1119,6 +1119,21 @@ const seta = "→";
     animation: subir 1.4s var(--ease-out) 1.5s forwards;
   }
 
+  /* Com movimento reduzido o global.css desliga as animações; sem isto a
+     hero fica invisível, porque só a animação (forwards) a mostrava. */
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js) .hero .w > span {
+      translate: none;
+    }
+    :global(.js) .entra,
+    :global(.js) .entra-visual,
+    :global(.js) .hero-phone,
+    :global(.js) .chip-a,
+    :global(.js) .aviso:first-child {
+      opacity: 1;
+    }
+  }
+
   .chip,
   .aviso {
     display: flex;
