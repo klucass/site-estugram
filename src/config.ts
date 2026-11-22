@@ -8,6 +8,9 @@ export const redes = {
   twitter: { usuario: 'estugramapp', url: 'https://x.com/estugramapp' },
 };
 
+/** Desafios e clubes oficiais citados na página. Confira com os que estão publicados no app. */
+export const oficiais = ['o Clube dos Corujas', 'o Modo Caverna até 2027'];
+
 /** Link do app com UTM indicando de qual botão da página veio o clique. */
 export function signupUrl(placement: string) {
   const url = new URL(appUrl);

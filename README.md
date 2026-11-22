@@ -4,6 +4,24 @@ Site estático em Astro para o novo posicionamento do Estugram. A marca no cabe�
 
 O visual da página segue o protótipo de alta fidelidade de desafios (https://claude.ai/artifact/GD9yD5myMZQHPjHw7Cc6HL): tema escuro `#0E1117`, fonte Archivo larga, azul `#5B8CFF` com texto escuro por cima e rosa `#FF4D8A` para sequência e para o "cafezinho". O protótipo usava uma chama ("fogo"), trocada por uma xícara de café para não lembrar a marca do Tinder. Posicionamento e planos vêm de `appestugram/docs/estugram-desafios.md`.
 
+## Posicionamento (22/11/2026)
+
+A página inicial vende **estudar junto por vídeo**, com o título que o site já tinha ("Estude com os amigos ao vivo, dispute o ranking e veja sua evolução."). A ideia é a da chamada de estudo em silêncio: cada um na sua casa, com a câmera ligada (no rosto ou só no caderno) e o microfone desligado, vendo os outros estudarem.
+
+O que a página pode e não pode prometer:
+
+- **Não existe sala pública avulsa.** A sala faz parte de um desafio. A pessoa entra num desafio ou clube oficial (hoje `oficiais`, em `src/config.ts`: Clube dos Corujas e Modo Caverna até 2027) ou cria um desafio com os amigos. Quem participa do desafio entra na sala e na chamada dele.
+- A chamada começa com câmera e microfone desligados, e sem câmera aparece o rosto do boneco.
+
+O herói é uma demonstração (`src/components/SalasDemo.astro`): a lista de desafios, a sala desenhada e, ao lado, a coluna de câmeras de quem está na chamada, como no app.
+
+- Desafios e pessoas da demonstração ficam em `src/data/salas.json` e são de exemplo (a página diz isso embaixo do painel).
+- Os desenhos das salas e os rostos (`public/salas/`) saem do código da sala do app: `node scripts/salas/gerar.mjs`, com o `appestugram` na pasta ao lado e `npm install` feito lá. Rode de novo quando os móveis ou os bonecos mudarem.
+- As imagens das câmeras (`public/salas/cameras/`) são recortes de capas do blog, de licença livre, sempre de caderno e mãos, sem rosto de ninguém.
+- No celular, o botão principal acompanha a rolagem depois do herói.
+- Saíram da página: a faixa de exemplos de desafios, os passos com prints, os critérios de pontuação e o ranking de interação. O texto antigo está no histórico do git.
+- Os prints reais da chamada (app com 12 pessoas de demonstração) estão em `~/Desktop/mkt_estugram/chamada-na-sala/prints/`; não entraram porque mostram os móveis e bonecos de antes do redesenho.
+
 ## Tom dos textos
 
 A página foi escrita para o lançamento dos desafios. O público principal é quem estuda para concurso e quer manter uma rotina com amigos. A mensagem parte de acompanhar os estudos e encontrar motivação na companhia do grupo.

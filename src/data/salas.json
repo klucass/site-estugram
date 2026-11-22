@@ -1,0 +1,241 @@
+{
+  "nota": "Desafios e pessoas de demonstração do herói. scripts/salas/gerar.mjs lê este arquivo para desenhar public/salas/*.svg. Em cada pessoa, `camera` é uma foto de public/salas/cameras (câmera ligada) ou \"rosto\" (na chamada com a câmera desligada); sem `camera`, a pessoa está na sala e fora da chamada.",
+  "salas": [
+    {
+      "id": "corujas",
+      "nome": "Clube dos Corujas",
+      "tipo": "Clube oficial",
+      "grupo": "oficiais",
+      "modelo": "biblioteca",
+      "noite": true,
+      "cor": "#A78BFA",
+      "quadro": [
+        "Clube dos Corujas",
+        "Pomodoro das 22h"
+      ],
+      "baloes": [
+        [
+          "8-0",
+          "bora mais um?"
+        ]
+      ],
+      "pessoas": [
+        {
+          "nome": "Camila",
+          "g": "f",
+          "senta": "1-2",
+          "acao": "escrever",
+          "camera": "caderno-caneta"
+        },
+        {
+          "nome": "Rafael",
+          "g": "m",
+          "senta": "2-2",
+          "acao": "ler",
+          "camera": "rosto",
+          "v": {
+            "acessorio": "oculos",
+            "cabelo": "curto",
+            "roupa": "camisa",
+            "corRoupa": "#5B8CFF"
+          }
+        },
+        {
+          "nome": "Larissa",
+          "g": "f",
+          "senta": "4-2",
+          "acao": "escrever",
+          "camera": "caneta-vermelha",
+          "v": {
+            "roupa": "moletom"
+          }
+        },
+        {
+          "nome": "Thiago",
+          "g": "m",
+          "senta": "1-5",
+          "acao": "ler",
+          "camera": "rosto"
+        },
+        {
+          "nome": "Bianca",
+          "g": "f",
+          "senta": "3-5",
+          "acao": "ler",
+          "camera": "marca-texto",
+          "v": {
+            "acessorio": "fones"
+          }
+        },
+        {
+          "nome": "Gabriel",
+          "g": "m",
+          "senta": "2-5",
+          "acao": "escrever"
+        },
+        {
+          "nome": "Marina",
+          "g": "f",
+          "senta": "8-0"
+        },
+        {
+          "nome": "Marcos",
+          "g": "m",
+          "senta": "9-0"
+        },
+        {
+          "nome": "Duda",
+          "g": "f",
+          "c": 6,
+          "r": 5
+        },
+        {
+          "nome": "Tiago",
+          "g": "m",
+          "senta": "7-3"
+        }
+      ],
+      "largura": 656,
+      "altura": 478
+    },
+    {
+      "id": "caverna",
+      "nome": "Modo Caverna até 2027",
+      "tipo": "Desafio oficial",
+      "grupo": "oficiais",
+      "modelo": "coworking",
+      "cor": "#5B8CFF",
+      "quadro": [
+        "Modo Caverna",
+        "Meta: 20h na semana"
+      ],
+      "baloes": [
+        [
+          "2-2",
+          "voltei, 50 min de foco"
+        ]
+      ],
+      "pessoas": [
+        {
+          "nome": "Nina",
+          "g": "f",
+          "senta": "2-2",
+          "acao": "escrever",
+          "camera": "caderno-aberto"
+        },
+        {
+          "nome": "Otto",
+          "g": "m",
+          "senta": "4-2",
+          "acao": "ler",
+          "camera": "rosto"
+        },
+        {
+          "nome": "Paula",
+          "g": "f",
+          "senta": "3-5",
+          "acao": "ler",
+          "camera": "calendario"
+        },
+        {
+          "nome": "Rui",
+          "g": "m",
+          "senta": "6-4",
+          "acao": "escrever",
+          "camera": "caderno-mesa"
+        },
+        {
+          "nome": "Sara",
+          "g": "f",
+          "senta": "6-5",
+          "acao": "ler",
+          "camera": "rosto"
+        },
+        {
+          "nome": "Igor",
+          "g": "m",
+          "senta": "3-2",
+          "acao": "ler"
+        },
+        {
+          "nome": "Téo",
+          "g": "m",
+          "senta": "9-0"
+        },
+        {
+          "nome": "Malu",
+          "g": "f",
+          "c": 8,
+          "r": 7
+        }
+      ],
+      "largura": 720,
+      "altura": 510
+    },
+    {
+      "id": "grupo",
+      "nome": "Maratona TRF Novembro",
+      "tipo": "Seu grupo",
+      "grupo": "seus",
+      "modelo": "cafe",
+      "cor": "#2DD4BF",
+      "quadro": [
+        "Maratona TRF",
+        "Simulado sábado, 9h"
+      ],
+      "baloes": [
+        [
+          "4-1",
+          "café e volto"
+        ]
+      ],
+      "pessoas": [
+        {
+          "nome": "Helena",
+          "g": "f",
+          "senta": "2-1",
+          "acao": "ler",
+          "camera": "marca-texto"
+        },
+        {
+          "nome": "Caio",
+          "g": "m",
+          "senta": "4-1",
+          "acao": "escrever",
+          "camera": "caneta-vermelha"
+        },
+        {
+          "nome": "Clara",
+          "g": "f",
+          "senta": "2-4",
+          "acao": "ler",
+          "camera": "rosto",
+          "v": {
+            "acessorio": "oculos"
+          }
+        },
+        {
+          "nome": "Davi",
+          "g": "m",
+          "senta": "6-4",
+          "acao": "ler",
+          "camera": "caderno-caneta"
+        },
+        {
+          "nome": "Luana",
+          "g": "f",
+          "senta": "6-2"
+        },
+        {
+          "nome": "Enzo",
+          "g": "m",
+          "c": 5,
+          "r": 7,
+          "emote": "cafe"
+        }
+      ],
+      "largura": 624,
+      "altura": 462
+    }
+  ]
+}

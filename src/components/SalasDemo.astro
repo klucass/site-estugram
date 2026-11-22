@@ -1,0 +1,700 @@
+---
+// Demonstração do herói: os desafios com a sala de cada um, quem está nela e,
+// ao lado do desenho, os quadros de câmera de quem está na chamada, como no app.
+// Os desenhos vêm de scripts/salas/gerar.mjs, que usa o código da sala do app;
+// as fotos das câmeras são capas do blog (licença livre) recortadas.
+import dados from "../data/salas.json";
+import { signupUrl } from "../config";
+
+type Pessoa = { nome: string; camera?: string; senta?: string };
+const salas = dados.salas as ((typeof dados.salas)[number] & { pessoas: Pessoa[] })[];
+const rosto = (nome: string) =>
+  `/salas/rostos/${nome
+    .normalize("NFD")
+    .replace(/[^a-zA-Z]/g, "")
+    .toLowerCase()}.svg`;
+const naChamada = (s: (typeof salas)[number]) => s.pessoas.filter((p) => p.camera);
+const grupos = [
+  { id: "oficiais", rotulo: "Desafios oficiais" },
+  { id: "seus", rotulo: "Do seu grupo" },
+];
+const indice = (id: string) => salas.findIndex((s) => s.id === id);
+---
+
+<div class="demo" data-salas>
+  <div class="barra" aria-hidden="true">
+    <span class="pontos"><i></i><i></i><i></i></span>
+    <span class="url">app.estugram.com</span>
+  </div>
+
+  <div class="corpo">
+    <div class="lista" role="tablist" aria-label="Desafios de demonstração">
+      {
+        grupos.map((g) => (
+          <>
+            <p class="rotulo">{g.rotulo}</p>
+            <div class="canais">
+              {salas
+                .filter((s) => s.grupo === g.id)
+                .map((s) => (
+                  <div class:list={["canal", { ativo: indice(s.id) === 0 }]} data-canal={s.id}>
+                    <button
+                      type="button"
+                      role="tab"
+                      id={`aba-sala-${s.id}`}
+                      aria-controls={`sala-${s.id}`}
+                      aria-selected={indice(s.id) === 0 ? "true" : "false"}
+                      tabindex={indice(s.id) === 0 ? 0 : -1}
+                    >
+                      <span class="sigla" style={`--c:${s.cor}`} aria-hidden="true">
+                        {s.nome[0]}
+                      </span>
+                      <span class="nome">
+                        {s.nome}
+                        <small>{s.tipo}</small>
+                      </span>
+                      <span class="cont">
+                        <i aria-hidden="true" />
+                        {s.pessoas.length}
+                        <span class="so-leitor"> pessoas na sala</span>
+                      </span>
+                    </button>
+                  </div>
+                ))}
+            </div>
+          </>
+        ))
+      }
+      <a class="criar" href={signupUrl("demo-criar")}>
+        <span aria-hidden="true">+</span> Criar um desafio
+      </a>
+    </div>
+
+    <div class="palco">
+      {
+        salas.map((s, i) => (
+          <div
+            class:list={["cena", { ativa: i === 0 }]}
+            id={`sala-${s.id}`}
+            role="tabpanel"
+            aria-labelledby={`aba-sala-${s.id}`}
+            inert={i !== 0}
+          >
+            <div class="topo">
+              <b>{s.nome}</b>
+              <span class="aba-sala">Sala</span>
+              <span class="agora">
+                <b>{s.pessoas.length}</b> na sala
+              </span>
+              <span class="relogio tnum" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="14" height="14">
+                  <circle cx="12" cy="13" r="8" fill="none" stroke="currentColor" stroke-width="2.4" />
+                  <path d="M12 9v4l2.5 2M9 2h6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" />
+                </svg>
+                <span data-relogio>24:59</span>
+              </span>
+            </div>
+
+            <div class="meio">
+              <img
+                class="desenho"
+                src={`/salas/${s.id}.svg`}
+                width={s.largura}
+                height={s.altura}
+                alt={`Sala do desafio ${s.nome}: ${s.pessoas.length} bonecos, a maioria sentada estudando nas mesas`}
+                loading={i === 0 ? "eager" : "lazy"}
+                decoding="async"
+                fetchpriority={i === 0 ? "high" : undefined}
+              />
+              <ul class="cameras" aria-label="Quem está na chamada">
+                {naChamada(s).map((p) => (
+                  <li class:list={["quadro", { ligada: p.camera !== "rosto" }]}>
+                    {p.camera === "rosto" ? (
+                      <img class="boneco" src={rosto(p.nome)} width="56" height="56" alt="" loading={i === 0 ? "eager" : "lazy"} />
+                    ) : (
+                      <img
+                        class="video"
+                        src={`/salas/cameras/${p.camera}.webp`}
+                        width="480"
+                        height="300"
+                        alt={`Câmera de ${p.nome} apontada para o caderno`}
+                        loading={i === 0 ? "eager" : "lazy"}
+                        decoding="async"
+                      />
+                    )}
+                    <span class="quem">
+                      <svg viewBox="0 0 24 24" width="13" height="13" role="img" aria-label="microfone desligado">
+                        <path d="M9 9v3a3 3 0 0 0 5 2.2M15 10V6a3 3 0 0 0-5.7-1.3M5 11a7 7 0 0 0 11.5 5.4M19 11a7 7 0 0 1-.6 2.8M12 18v3M4 4l16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                      </svg>
+                      {p.nome}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="controles">
+              <span class="na-chamada">
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                  <path d="M3 8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2ZM15 10.5l5-3v9l-5-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+                </svg>
+                <b>{naChamada(s).length}</b> na chamada, em silêncio
+              </span>
+              <a class="entrar" href={signupUrl(`demo-${s.id}`)}>
+                Entrar na chamada
+              </a>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>
+<p class="nota">Demonstração: as pessoas e os números são de exemplo.</p>
+
+<script>
+  const demo = document.querySelector<HTMLElement>("[data-salas]");
+  if (demo) {
+    const calmo = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const canais = [...demo.querySelectorAll<HTMLElement>(".canal")];
+    const abas = canais.map((c) => c.querySelector<HTMLButtonElement>("button")!);
+    const cenas = [...demo.querySelectorAll<HTMLElement>(".cena")];
+    let atual = 0;
+    let sozinho = !calmo;
+
+    const mostrar = (n: number, foco = false) => {
+      atual = (n + canais.length) % canais.length;
+      canais.forEach((c, i) => c.classList.toggle("ativo", i === atual));
+      abas.forEach((a, i) => {
+        a.setAttribute("aria-selected", String(i === atual));
+        a.tabIndex = i === atual ? 0 : -1;
+      });
+      cenas.forEach((c, i) => {
+        c.classList.toggle("ativa", i === atual);
+        c.inert = i !== atual;
+      });
+      if (foco) abas[atual].focus();
+    };
+
+    abas.forEach((a, i) => {
+      a.addEventListener("click", () => {
+        sozinho = false;
+        mostrar(i);
+      });
+      a.addEventListener("keydown", (ev) => {
+        const passo = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[ev.key];
+        if (!passo) return;
+        ev.preventDefault();
+        sozinho = false;
+        mostrar(atual + passo, true);
+      });
+    });
+    // Quem passa o mouse ou toca está explorando: a troca automática para.
+    demo.addEventListener("pointerdown", () => (sozinho = false), { once: true });
+
+    // Troca de sala sozinha enquanto a demonstração está na tela e ninguém mexeu.
+    let visivel = false;
+    new IntersectionObserver(([e]) => (visivel = e.isIntersecting), { threshold: 0.4 }).observe(demo);
+    setInterval(() => {
+      if (sozinho && visivel && !document.hidden && !demo.matches(":hover")) mostrar(atual + 1);
+    }, 6500);
+
+    // Relógio do pomodoro andando.
+    if (!calmo) {
+      const relogios = [...demo.querySelectorAll<HTMLElement>("[data-relogio]")];
+      let resta = 24 * 60 + 59;
+      setInterval(() => {
+        resta = resta > 0 ? resta - 1 : 25 * 60;
+        const texto = `${String(Math.floor(resta / 60)).padStart(2, "0")}:${String(resta % 60).padStart(2, "0")}`;
+        relogios.forEach((r) => (r.textContent = texto));
+      }, 1000);
+    }
+  }
+</script>
+
+<style>
+  .demo {
+    --fundo: #12151d;
+    position: relative;
+    border-radius: 18px;
+    border: 1px solid var(--line-2);
+    background: var(--fundo);
+    overflow: hidden;
+    box-shadow:
+      0 40px 120px -30px rgb(0 0 0 / 0.8),
+      0 0 0 1px rgb(255 255 255 / 0.03) inset;
+    text-align: left;
+  }
+  .barra {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    height: 38px;
+    padding: 0 14px;
+    background: #171b25;
+    border-bottom: 1px solid var(--line);
+  }
+  .pontos {
+    display: flex;
+    gap: 6px;
+  }
+  .pontos i {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #2e3445;
+  }
+  .url {
+    flex: 1;
+    max-width: 320px;
+    margin: 0 auto;
+    padding: 3px 12px;
+    border-radius: 8px;
+    background: #10131a;
+    color: var(--muted);
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .corpo {
+    display: grid;
+    grid-template-columns: 264px minmax(0, 1fr);
+  }
+
+  /* ---------- Lista de salas ---------- */
+  .lista {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 16px 10px;
+    background: #151923;
+    border-right: 1px solid var(--line);
+  }
+  .rotulo {
+    padding: 6px 10px 2px;
+    color: var(--muted);
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .canais {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .canal button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    min-height: 52px;
+    padding: 0 10px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--muted-2);
+    font: inherit;
+    font-size: 14.5px;
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+    transition:
+      background 0.25s ease,
+      color 0.25s ease;
+  }
+  .canal button:hover {
+    background: rgb(255 255 255 / 0.05);
+    color: var(--text);
+  }
+  .canal.ativo button {
+    background: rgb(91 140 255 / 0.14);
+    color: var(--text);
+  }
+  .sigla {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    background: var(--c);
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 900;
+  }
+  .nome {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    line-height: 1.2;
+  }
+  .nome small {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .cont {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--up);
+    font-size: 13px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+  }
+  .cont i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--up);
+    box-shadow: 0 0 0 0 rgb(126 226 168 / 0.5);
+    animation: pulso 2.4s ease-out infinite;
+  }
+  @keyframes pulso {
+    70%,
+    100% {
+      box-shadow: 0 0 0 7px rgb(126 226 168 / 0);
+    }
+  }
+  .so-leitor {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .criar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    margin: 8px 0 2px;
+    padding: 0 10px;
+    border: 1px dashed var(--line-2);
+    border-radius: 10px;
+    color: var(--muted-2);
+    font-size: 14.5px;
+    font-weight: 700;
+    text-decoration: none;
+    transition:
+      border-color 0.25s ease,
+      color 0.25s ease;
+  }
+  .criar span {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 7px;
+    background: var(--card-2);
+    font-weight: 900;
+  }
+  .criar:hover {
+    border-color: var(--blue);
+    color: var(--text);
+  }
+
+  /* ---------- Sala ---------- */
+  .palco {
+    display: grid;
+    min-width: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 46%, rgb(91 140 255 / 0.12), transparent 70%),
+      linear-gradient(#141824, #10131a);
+  }
+  .cena {
+    grid-area: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.5s ease,
+      visibility 0s 0.5s;
+  }
+  .cena.ativa {
+    opacity: 1;
+    visibility: visible;
+    transition:
+      opacity 0.5s ease,
+      visibility 0s;
+  }
+  .topo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 50px;
+    padding: 0 18px;
+    border-bottom: 1px solid var(--line);
+    font-size: 15px;
+  }
+  .topo > b {
+    font-weight: 800;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .aba-sala {
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: rgb(91 140 255 / 0.16);
+    color: var(--link);
+    font-size: 12.5px;
+    font-weight: 800;
+  }
+  .agora {
+    color: var(--muted-2);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .agora b {
+    color: var(--text);
+  }
+  .relogio {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: var(--blue-soft);
+    color: var(--up);
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  /* Desenho da sala e, ao lado, a coluna de câmeras */
+  .meio {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(128px, 19%, 168px);
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+    padding: 10px 14px 10px 4px;
+  }
+  .desenho {
+    width: 100%;
+    height: auto;
+    /* Todas as salas ocupam a mesma altura, para a troca não mexer no layout */
+    aspect-ratio: 720 / 510;
+    object-fit: contain;
+  }
+  .cena.ativa .desenho {
+    animation: chega 0.9s var(--ease-out);
+  }
+  @keyframes chega {
+    from {
+      scale: 0.97;
+      translate: 0 10px;
+    }
+  }
+  .cameras {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .quadro {
+    position: relative;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 10;
+    border-radius: 12px;
+    border: 1px solid var(--line-2);
+    background: #0f1219;
+    overflow: hidden;
+  }
+  .cena.ativa .quadro {
+    animation: liga 0.7s var(--ease-out) backwards;
+  }
+  .quadro:nth-child(2) {
+    animation-delay: 0.08s;
+  }
+  .quadro:nth-child(3) {
+    animation-delay: 0.16s;
+  }
+  .quadro:nth-child(4) {
+    animation-delay: 0.24s;
+  }
+  .quadro:nth-child(5) {
+    animation-delay: 0.32s;
+  }
+  @keyframes liga {
+    from {
+      opacity: 0;
+      translate: 14px 0;
+    }
+  }
+  .video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  /* A imagem da câmera respira de leve, como vídeo parado em alguém escrevendo */
+  .quadro.ligada .video {
+    animation: respira 7s ease-in-out infinite alternate;
+  }
+  .quadro.ligada:nth-child(odd) .video {
+    animation-duration: 9s;
+    animation-delay: -3s;
+  }
+  @keyframes respira {
+    to {
+      scale: 1.07;
+      translate: -1.5% 1%;
+    }
+  }
+  .boneco {
+    width: 46%;
+    height: auto;
+    margin-bottom: 14%;
+    border-radius: 50%;
+    background: var(--blue-soft);
+  }
+  .quem {
+    position: absolute;
+    inset: auto 5px 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 7px;
+    border-radius: 7px;
+    background: rgb(8 10 15 / 0.72);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .quem svg {
+    flex: none;
+    color: var(--down);
+  }
+
+  .controles {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 14px 14px;
+    padding: 10px 10px 10px 16px;
+    border: 1px solid var(--line-2);
+    border-radius: 14px;
+    background: rgb(24 28 37 / 0.9);
+  }
+  .na-chamada {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    flex: 1;
+    min-width: 0;
+    color: var(--muted-2);
+    font-size: 14.5px;
+  }
+  .na-chamada b {
+    color: var(--text);
+    margin-right: -4px;
+  }
+  .na-chamada svg {
+    flex: none;
+  }
+  .entrar {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 16px;
+    border-radius: 11px;
+    background: var(--up);
+    color: var(--ink);
+    font-size: 14.5px;
+    font-weight: 800;
+    text-decoration: none;
+    transition: filter 0.25s ease;
+  }
+  .entrar:hover {
+    color: var(--ink);
+    filter: brightness(1.08);
+  }
+  .nota {
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 13px;
+    text-align: center;
+  }
+
+  /* No celular a lista vira uma fileira de desafios e as câmeras vão para baixo da sala */
+  @media (max-width: 860px) {
+    .corpo {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .lista {
+      flex-direction: row;
+      gap: 6px;
+      padding: 10px;
+      border-right: 0;
+      border-bottom: 1px solid var(--line);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .rotulo,
+    .criar,
+    .nome small {
+      display: none;
+    }
+    .canais {
+      flex-direction: row;
+      gap: 6px;
+    }
+    .canal {
+      flex: none;
+    }
+    .canal button {
+      min-height: 44px;
+      border: 1px solid var(--line-2);
+    }
+    .canal.ativo button {
+      border-color: var(--blue);
+    }
+    .sigla {
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+    .topo {
+      padding: 0 14px;
+    }
+    .topo > b,
+    .aba-sala {
+      display: none;
+    }
+    .meio {
+      grid-template-columns: minmax(0, 1fr);
+      padding: 6px 10px 10px;
+    }
+    .cameras {
+      flex-direction: row;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .quadro {
+      flex: 0 0 31%;
+    }
+    .controles {
+      margin: 0 10px 10px;
+    }
+  }
+  @media (max-width: 480px) {
+    .na-chamada svg {
+      display: none;
+    }
+    .na-chamada {
+      font-size: 13.5px;
+    }
+  }
+</style>

@@ -12,7 +12,7 @@ export async function GET(context: APIContext) {
   const linhas = [
     '# Estugram',
     '',
-    '> Aplicativo brasileiro para organizar e acompanhar os estudos de quem se prepara para concursos, ENEM e vestibular: registro do tempo estudado por matéria e assunto, timer, ciclo de estudos, calendário automático de revisões (24 horas, 7 e 30 dias), estatísticas de desempenho e desafios de estudo com amigos, com check-in, feed e ranking.',
+    '> Aplicativo brasileiro para organizar e acompanhar os estudos de quem se prepara para concursos, ENEM e vestibular: registro do tempo estudado por matéria e assunto, timer, ciclo de estudos, calendário automático de revisões (24 horas, 7 e 30 dias), estatísticas de desempenho, e desafios de estudo em grupo, com check-in, feed, ranking e uma sala de estudo online por desafio, onde os participantes estudam juntos em silêncio por chamada de vídeo (câmera no rosto, no caderno ou desligada).',
     '',
     `- App: ${'https://app.estugram.com'}`,
     `- Site: ${url('/')}`,
