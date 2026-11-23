@@ -29,6 +29,7 @@ A rotina escolhe o autor por esta tabela: se as duas últimas linhas são do `ca
 | `como-registrar-horas-de-estudo` | bia | como registrar horas de estudo | 2026-11-09 |
 | `quantas-horas-estudar-por-dia-concurso` | caio | quantas horas estudar por dia para concurso | 2026-11-18 |
 | `grifar-o-texto-funciona` | caio | grifar o texto funciona | 2026-11-20 |
+| `sala-de-estudo-online` | bia | sala de estudo online | 2026-11-23 |
 
 ---
 
@@ -68,7 +69,7 @@ A rotina escolhe o autor por esta tabela: se as duas últimas linhas são do `ca
 | 103 | estudar com amigos online | ambos | Desafios do Estugram: check-in com foto, feed, cafezinho e ranking. Conferir se está aberto para todos ou por convite | pendente |
 | 104 | histórico de estudos | ambos | Calendário do mês com tempo e matérias por dia: como usar para ajustar a semana | pendente |
 | 105 | ciclo de estudos enem | enem | Montar um ciclo com as áreas do ENEM no Estugram, com pesos e redação. Linkar `ciclo-de-estudos` | pendente |
-| 106 | sala de estudo online | ambos | Estudar "junto" com quem está estudando agora: como funciona a sala e por que a presença ajuda a sentar e começar | pendente |
+| 106 | sala de estudo online | ambos | Estudar "junto" com quem está estudando agora: como funciona a sala e por que a presença ajuda a sentar e começar | usada 2026-11-23 |
 | 107 | planilha de estudos ou aplicativo | concurso | O que a planilha faz bem, onde ela quebra (revisões, ciclo, estatística) e como migrar sem perder o histórico | pendente |
 | 108 | desafio de estudos 30 dias | ambos | Montar um desafio de 30 dias com amigos: regras simples, pontuação individual, sem cobrança por falta | pendente |
 | 109 | estatísticas de estudo por matéria | concurso | Ler tempo, questões e acerto por matéria e assunto para decidir o que estudar na próxima semana | pendente |
